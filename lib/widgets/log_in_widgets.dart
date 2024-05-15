@@ -74,3 +74,60 @@ class AppleButton extends StatelessWidget {
     );
   }
 }
+
+class EmailTextField extends StatelessWidget {
+  EmailTextField({Key? key});
+
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 80,
+      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(width: 2, color: const Color(0xFF000000))
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+        child: TextField(
+          controller: _textController,
+          decoration: const InputDecoration(
+            hintText: 'Enter your email',
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PasswordTextField extends StatelessWidget {
+  PasswordTextField({Key? key});
+
+  final TextEditingController _textController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 80,
+      height: 50,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(width: 2, color: const Color(0xFF000000))
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+        child: TextField(
+          controller: _textController,
+          decoration: const InputDecoration(
+            hintText: 'Enter your password',
+            border: InputBorder.none,
+            suffix: Icon(Icons.visibility, color: AppStyle.colorBlack,)
+          ),
+        ),
+      ),
+    );
+  }
+}

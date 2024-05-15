@@ -15,15 +15,23 @@ class LogInBottomSheet {
           child: Column(
             children: [
               AppBar(
-                leading: Icon(Icons.close),
-                title: Text("Log in"),
+                leading: const Icon(Icons.close),
+                title: const Text("Log in"),
                 centerTitle: true,
               ),
               const FacebookButton(),
               const SizedBox(height: 10,),
               const GoogleButton(),
               const SizedBox(height: 10,),
-              const AppleButton()
+              const AppleButton(),
+              const SizedBox(height: 10,),
+              const Text('OR'),
+              const Text('Email'),
+              EmailTextField(),
+              const Text('Password'),
+              PasswordTextField(),
+              const Text('Forgot your password?'),
+              const Text('Use iCloud Keychain'),
             ],
           ),
         );
