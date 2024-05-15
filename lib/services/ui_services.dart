@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:pinterest_clone/styles.dart';
 
-class ScrollAnimationService {
-  final ScrollController scrollController;
-  final int index;
+import '../widgets/log_in_widgets.dart';
 
-  ScrollAnimationService(this.scrollController, this.index);
-
-  void startAnimation(
-      double max, double min, double direction, int seconds) async {
-    await _animateToMaxMin(max, min, direction, seconds);
-  }
-
-  Future<void> _animateToMaxMin(
-      double max, double min, double direction, int seconds) async {
-    await scrollController.animateTo(direction,
-        duration: Duration(seconds: seconds), curve: Curves.linear);
-    direction = direction == max ? min : max;
-    await _animateToMaxMin(max, min, direction, seconds);
+class LogInBottomSheet {
+  displayLogInInfo(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext bc) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * .90,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              AppBar(
+                leading: Icon(Icons.close),
+                title: Text("Log in"),
+                centerTitle: true,
+              ),
+              const FacebookButton(),
+              const SizedBox(height: 10,),
+              const GoogleButton(),
+              const SizedBox(height: 10,),
+              const AppleButton()
+            ],
+          ),
+        );
+      },
+    );
   }
 }
