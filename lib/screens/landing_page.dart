@@ -23,7 +23,7 @@ class LandingPage extends ConsumerWidget {
             itemBuilder: (BuildContext context, int index) {
               final UnsplashPhoto photo = photos[index];
               return Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: SizedBox(
                   child: Column(
                     children: [
@@ -45,3 +45,4 @@ class LandingPage extends ConsumerWidget {
     );
   }
 }
+
