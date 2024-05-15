@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pinterest_clone/styles.dart';
 
 class LandingPageWidget extends StatelessWidget {
-  const LandingPageWidget({super.key});
+  const LandingPageWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 3,
+      height: (MediaQuery.of(context).size.height / 3) - 20,
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
@@ -16,19 +17,19 @@ class LandingPageWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 50,),
-          const Text('Welcome to Pinterest'),
-          const SizedBox(height: 20,),
+          const Text('Welcome to Pinterest', style: AppStyle.landingHeader,),
+          const SizedBox(height: 30,),
           MaterialButton(
             onPressed: (){
               
             },
             minWidth: MediaQuery.of(context).size.width - 80,
             height: 50,
-            color: Colors.red,
+            color: AppStyle.colorRed,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
-            child: const Text('Sign up'),
+            child: const Text('Sign up', style: AppStyle.buttonRedText,),
           ),
           const SizedBox(height: 10,),
           MaterialButton(
@@ -37,17 +38,46 @@ class LandingPageWidget extends StatelessWidget {
             },
             minWidth: MediaQuery.of(context).size.width - 80,
             height: 50,
-            color: Colors.grey,
+            color: AppStyle.colorWhiteGrey,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
-            child: const Text('Log in'),
+            child: const Text('Log in', style: AppStyle.buttonWhiteText,),
           ),
           const SizedBox(height: 15,),
-          const Text(
-            'By continuing, you agree to Pinterest’s Terms of Service and acknowledge you\'ve read our Privacy Policy. Notice at collection',
+          RichText(
             textAlign: TextAlign.center,
+            text: const TextSpan(
+              style: TextStyle(color: Colors.black),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'By continuing, you agree to Pinterest’s ',
+                ),
+                TextSpan(
+                  text: 'Terms of Service',
+                  style: TextStyle(color: AppStyle.colorBlue),
+                ),
+                TextSpan(
+                  text: ' and acknowledge you\'ve read our ',
+                ),
+                TextSpan(
+                  text: 'Privacy Policy',
+                  style: TextStyle(color: AppStyle.colorBlue),
+                ),
+                TextSpan(
+                  text: '. ',
+                ),
+                TextSpan(
+                  text: 'Notice at collection',
+                  style: TextStyle(color: AppStyle.colorBlue),
+                ),
+                TextSpan(
+                  text: '.',
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 15,),
         ],
       ),
     );

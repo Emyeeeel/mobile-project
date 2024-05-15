@@ -48,6 +48,34 @@ class LandingPage extends ConsumerWidget {
           const Positioned(
             bottom: 0,
             child: LandingPageWidget()
+          ),
+          Positioned(
+            bottom: (MediaQuery.of(context).size.height / 3) - 20,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 100,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: const Alignment(0.00, -1.00),
+                    end: const Alignment(0, 1),
+                    colors: [Colors.black.withOpacity(0), Colors.white],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: (MediaQuery.of(context).size.width/2) - 60,
+            bottom: (MediaQuery.of(context).size.height / 3) - 60,
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/assets/pinterest_logo.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
           )
         ],
       ),
