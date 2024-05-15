@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pinterest_clone/widgets/landing_widgets.dart';
 
 import '../models/photo_model.dart';
 import '../providers/api_providers.dart';
@@ -13,34 +14,42 @@ class LandingPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<UnsplashPhoto>> photoProvider = ref.watch(landingPagePhotosProvider);
     return Scaffold(
-      body: photoProvider.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
-        data: (List<UnsplashPhoto> photos) {
-          return MasonryGridView.builder(
-            itemCount: photos.length,
-            gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
-            itemBuilder: (BuildContext context, int index) {
-              final UnsplashPhoto photo = photos[index];
-              return Padding(
-                padding: const EdgeInsets.all(5),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: Image.network(
-                          photo.photoUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+      body: Stack(
+        children: [
+          photoProvider.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) => Center(child: Text('Error: $error')),
+            data: (List<UnsplashPhoto> photos) {
+              return MasonryGridView.builder(
+                itemCount: photos.length,
+                gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
+                itemBuilder: (BuildContext context, int index) {
+                  final UnsplashPhoto photo = photos[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              photo.photoUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
               );
             }
-          );
-        }
+          ),
+          const Positioned(
+            bottom: 0,
+            child: LandingPageWidget()
+          )
+        ],
       ),
     );
   }
