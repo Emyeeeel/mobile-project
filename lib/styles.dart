@@ -15,14 +15,14 @@ class AppStyle{
 
   static const TextStyle buttonWhiteText = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: FontWeight.w600,
     color: colorBlack
   );
 
   static const TextStyle landingHeader = TextStyle(
     fontFamily: 'Inter',
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: FontWeight.w600,
     color: colorBlack
   );

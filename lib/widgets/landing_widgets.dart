@@ -8,7 +8,7 @@ class LandingPageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: (MediaQuery.of(context).size.height / 3) - 20,
+      height: (MediaQuery.of(context).size.height / 3),
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
@@ -18,7 +18,7 @@ class LandingPageWidget extends StatelessWidget {
         children: [
           const SizedBox(height: 50,),
           const Text('Welcome to Pinterest', style: AppStyle.landingHeader,),
-          const SizedBox(height: 30,),
+          const SizedBox(height: 20,),
           MaterialButton(
             onPressed: (){
               
@@ -48,28 +48,28 @@ class LandingPageWidget extends StatelessWidget {
           RichText(
             textAlign: TextAlign.center,
             text: const TextSpan(
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppStyle.colorBlack),
               children: <TextSpan>[
                 TextSpan(
                   text: 'By continuing, you agree to Pinterest’s ',
                 ),
                 TextSpan(
                   text: 'Terms of Service',
-                  style: TextStyle(color: AppStyle.colorBlue),
+                  style: TextStyle(color: AppStyle.colorBlue, fontWeight: FontWeight.w500),
                 ),
                 TextSpan(
                   text: ' and acknowledge you\'ve read our ',
                 ),
                 TextSpan(
                   text: 'Privacy Policy',
-                  style: TextStyle(color: AppStyle.colorBlue),
+                  style: TextStyle(color: AppStyle.colorBlue, fontWeight: FontWeight.w500),
                 ),
                 TextSpan(
                   text: '. ',
                 ),
                 TextSpan(
                   text: 'Notice at collection',
-                  style: TextStyle(color: AppStyle.colorBlue),
+                  style: TextStyle(color: AppStyle.colorBlue, fontWeight: FontWeight.w500),
                 ),
                 TextSpan(
                   text: '.',

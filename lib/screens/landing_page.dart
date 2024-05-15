@@ -50,7 +50,7 @@ class LandingPage extends ConsumerWidget {
             child: LandingPageWidget()
           ),
           Positioned(
-            bottom: (MediaQuery.of(context).size.height / 3) - 20,
+            bottom: (MediaQuery.of(context).size.height / 3),
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 100,
@@ -65,7 +65,7 @@ class LandingPage extends ConsumerWidget {
           ),
           Positioned(
             left: (MediaQuery.of(context).size.width/2) - 60,
-            bottom: (MediaQuery.of(context).size.height / 3) - 60,
+            bottom: (MediaQuery.of(context).size.height / 3) - 50,
             child: Container(
               width: 120,
               height: 120,
