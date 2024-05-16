@@ -6,6 +6,7 @@ class AppStyle{
   static const colorBlue = Color(0xFF4286F5);
   static const colorDarkBlue = Color(0xFF3C5996);
   static const colorBlack = Color(0xFF0F0E0F);
+  static const borderColor = Color(0xFFCECDCE);
 
   static const TextStyle buttonRedText = TextStyle(
     fontFamily: 'Inter',
@@ -35,7 +36,7 @@ class AppStyle{
     color: colorWhiteGrey
   );
 
-    static const TextStyle appleButton = TextStyle(
+  static const TextStyle appleButton = TextStyle(
     fontFamily: 'Inter',
     fontSize: 18,
     fontWeight: FontWeight.w600,
