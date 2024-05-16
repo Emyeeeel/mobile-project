@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/styles.dart';
 
+import '../screens/landing_page.dart';
 import '../widgets/log_in_widgets.dart';
 
 class LogInBottomSheet {
@@ -19,7 +20,12 @@ class LogInBottomSheet {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppBar(
-                leading: const Icon(Icons.close),
+                leading: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage()));
+                  },
+                  child: const Icon(Icons.close)
+                ),
                 title: const Text("Log in"),
                 centerTitle: true,
               ),
