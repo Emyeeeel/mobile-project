@@ -19,16 +19,20 @@ class LogInBottomSheet {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBar(
-                leading: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage()));
-                  },
-                  child: const Icon(Icons.close)
+              PreferredSize(
+                preferredSize: const Size.fromHeight(55.0),
+                child: AppBar( 
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage()));
+                    },
+                    child: const Icon(Icons.close)
+                  ),
+                  title: const Text("Log in"),
+                  centerTitle: true,
                 ),
-                title: const Text("Log in"),
-                centerTitle: true,
               ),
+              const SizedBox(height: 30,),
               const Center(child: FacebookButton()),
               const SizedBox(height: 10,),
               const Center(child: GoogleButton()),
