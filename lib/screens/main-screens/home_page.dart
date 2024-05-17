@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/api_providers.dart';
 
 import '../../providers/auth_providers.dart';
+import '../../providers/ui_providers.dart';
 
 class HomePage extends ConsumerWidget {
   HomePage({super.key});
@@ -48,7 +49,8 @@ class HomePage extends ConsumerWidget {
                       const SizedBox(height: 5,),
                       GestureDetector(
                         onTap: () async {
-                          //
+                          final uiService = ref.watch(uiServiceProvider); 
+                          uiService.displayDetails(context, photo.photographerUsername);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
