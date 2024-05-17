@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/styles.dart';
+import '../providers/ui_providers.dart';
 
-class LandingPageWidget extends StatelessWidget {
-  const LandingPageWidget({Key? key}) : super(key: key);
+class LandingPageWidget extends ConsumerWidget {
+  const LandingPageWidget({Key? key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: (MediaQuery.of(context).size.height / 3),
@@ -16,35 +18,13 @@ class LandingPageWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 50,),
-          const Text('Welcome to Pinterest', style: AppStyle.landingHeader,),
-          const SizedBox(height: 20,),
-          MaterialButton(
-            onPressed: (){
-              
-            },
-            minWidth: MediaQuery.of(context).size.width - 80,
-            height: 50,
-            color: AppStyle.colorRed,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: const Text('Sign up', style: AppStyle.buttonRedText,),
-          ),
-          const SizedBox(height: 10,),
-          MaterialButton(
-            onPressed: (){
-
-            },
-            minWidth: MediaQuery.of(context).size.width - 80,
-            height: 50,
-            color: AppStyle.colorWhiteGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: const Text('Log in', style: AppStyle.buttonWhiteText,),
-          ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 50),
+          const Text('Welcome to Pinterest', style: AppStyle.landingHeader),
+          const SizedBox(height: 20),
+          const SignInButton(),
+          const SizedBox(height: 10),
+          const LogInButton(),
+          const SizedBox(height: 15),
           RichText(
             textAlign: TextAlign.center,
             text: const TextSpan(
@@ -77,9 +57,48 @@ class LandingPageWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 15),
         ],
       ),
+    );
+  }
+}
+
+class SignInButton extends StatelessWidget {
+  const SignInButton({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: (){},
+      minWidth: MediaQuery.of(context).size.width - 80,
+      height: 50,
+      color: AppStyle.colorRed,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: const Text('Sign up', style: AppStyle.buttonRedText),
+    );
+  }
+}
+
+class LogInButton extends ConsumerWidget {
+  const LogInButton({Key? key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialButton(
+      onPressed: () async {
+        final uiService = ref.watch(uiServiceProvider);
+        uiService.displayLogInInfo(context); 
+      },
+      minWidth: MediaQuery.of(context).size.width - 80,
+      height: 50,
+      color: AppStyle.colorWhiteGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: const Text('Log in', style: AppStyle.buttonWhiteText),
     );
   }
 }
