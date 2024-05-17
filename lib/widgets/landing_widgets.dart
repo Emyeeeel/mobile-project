@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/screens/log_in_page.dart';
 import 'package:pinterest_clone/styles.dart';
-import '../providers/ui_providers.dart';
+
 
 class LandingPageWidget extends ConsumerWidget {
-  const LandingPageWidget({Key? key});
+  const LandingPageWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +24,7 @@ class LandingPageWidget extends ConsumerWidget {
           const SizedBox(height: 20),
           const SignInButton(),
           const SizedBox(height: 10),
-          const LogInButton(),
+          LogInButton(),
           const SizedBox(height: 15),
           RichText(
             textAlign: TextAlign.center,
@@ -65,7 +66,7 @@ class LandingPageWidget extends ConsumerWidget {
 }
 
 class SignInButton extends StatelessWidget {
-  const SignInButton({Key? key});
+  const SignInButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +83,14 @@ class SignInButton extends StatelessWidget {
   }
 }
 
-class LogInButton extends ConsumerWidget {
-  const LogInButton({Key? key});
+class LogInButton extends StatelessWidget {
+  const LogInButton({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () async {
-        final uiService = ref.watch(uiServiceProvider);
-        uiService.displayLogInInfo(context); 
+        Navigator.push(context, MaterialPageRoute(builder: (context) => LogInPage()));
       },
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
