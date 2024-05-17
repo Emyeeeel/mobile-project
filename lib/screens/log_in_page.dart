@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/screens/main-screens/home_page.dart';
 
+import '../providers/auth_providers.dart';
 import '../providers/ui_providers.dart';
-import '../services/auth_services.dart';
 import '../styles.dart';
 import '../widgets/log_in_widgets.dart';
 import 'landing_page.dart';
 
 class LogInPage extends ConsumerWidget {
-  LogInPage({Key? key}) : super(key: key);
+  LogInPage({super.key});
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
