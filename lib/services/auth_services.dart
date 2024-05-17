@@ -6,60 +6,6 @@ import 'package:pinterest_clone/screens/landing_page.dart';
 
 import '../screens/main-screens/home_page.dart';
 
-class TestLogIn extends ConsumerWidget {
-  TestLogIn({super.key});
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final authProvider = ref.watch(authServicesProvider);
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text('Email'),
-            TextField(
-              controller: emailController,
-              obscureText: false,
-              decoration: const InputDecoration(
-                hintText: 'Enter your email',
-                border: InputBorder.none,
-              ),
-            ),
-            const SizedBox(height: 50,),
-            const Text('Password'),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Enter your password',
-                border: InputBorder.none,
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                authProvider.signUserIn(context,emailController.text, passwordController.text);
-              },
-              child: Container(
-                width: 200,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.red
-                ),
-                child: Text('Log in'),
-              ),
-            )
-          ],
-        )
-      ),
-    );
-  }
-}
-
 class TestAuthPage extends StatelessWidget {
   const TestAuthPage({super.key});
 
@@ -103,22 +49,24 @@ class AuthServices {
       );
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+      Navigator.pop(context); // Dismiss loading indicator
       if (e.code == 'user-not-found') {
-        wrongEmail(context); //not functioning properly
+        showErrorMessage(context, 'User not found');
       } else if (e.code == 'wrong-password') {
-        wrongPass(context); //not functioning properly
+        showErrorMessage(context, 'Wrong password');
+      } else {
+        showErrorMessage(context, 'Authentication failed'); // Handle other errors
       }
     }
   }
 
-  void wrongEmail(BuildContext context){
+  void showErrorMessage(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text('Error'),
-          content: Text('User not found'),
+          content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
@@ -131,27 +79,6 @@ class AuthServices {
       },
     );
   }
-
-  void wrongPass(BuildContext context){
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text('Wrong password'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); 
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future<void> signUserOut() async {
     await FirebaseAuth.instance.signOut();
   }

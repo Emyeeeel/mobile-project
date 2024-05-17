@@ -77,10 +77,41 @@ class AppleButton extends StatelessWidget {
   }
 }
 
-class EmailTextField extends StatelessWidget {
-  EmailTextField({Key? key});
+class GenericButton extends StatelessWidget {
+  const GenericButton({
+    Key? key,
+    required this.color,
+    required this.text,
+    required this.onPressed, // New parameter for onPressed callback
+  }) : super(key: key);
 
-  final TextEditingController _textController = TextEditingController();
+  final Color color;
+  final String text;
+  final VoidCallback onPressed; // Callback to be executed when the button is pressed
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: onPressed, // Use the provided onPressed callback
+      minWidth: MediaQuery.of(context).size.width - 80,
+      height: 50,
+      color: color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: Text(
+        text,
+        style: AppStyle.googleButton,
+      ),
+    );
+  }
+}
+
+
+class EmailTextField extends StatelessWidget {
+  EmailTextField({Key? key, required this.textController});
+
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +125,7 @@ class EmailTextField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
         child: TextField(
-          controller: _textController,
+          controller: textController,
           decoration: const InputDecoration(
             hintText: 'Enter your email',
             border: InputBorder.none,
@@ -107,9 +138,9 @@ class EmailTextField extends StatelessWidget {
 
 
 class PasswordTextField extends ConsumerWidget {
-  PasswordTextField({Key? key}) : super(key: key);
+  PasswordTextField({Key? key, required this.textController});
 
-  final TextEditingController _textController = TextEditingController();
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -127,7 +158,7 @@ class PasswordTextField extends ConsumerWidget {
           children: [
             Expanded(
               child: TextField(
-                controller: _textController,
+                controller: textController,
                 obscureText: !isTapped,
                 decoration: const InputDecoration(
                   hintText: 'Enter your password',
@@ -148,30 +179,6 @@ class PasswordTextField extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class GenericButton extends StatelessWidget {
-  const GenericButton({Key? key, required this.color, required this.text}) : super(key: key);
-
-  final Color color; 
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: () async {},
-      minWidth: MediaQuery.of(context).size.width - 80,
-      height: 50,
-      color: color, 
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: Text(
-        text,
-        style: AppStyle.googleButton,
       ),
     );
   }
