@@ -43,4 +43,16 @@ class AppStyle{
     color: colorBlack
   );
 
+  static const TextStyle detailsTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle detailsSubtitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  );
+
 }
