@@ -143,7 +143,7 @@ class DisplayName extends ConsumerWidget {
       width: MediaQuery.of(context).size.width,
       height: 100,
       child: Center(
-        child: Text('Hey ${ref.watch(userProvider.notifier).state.name}!'),
+        child: Text('Hey ${ref.watch(userProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
       ),
     );
   }
