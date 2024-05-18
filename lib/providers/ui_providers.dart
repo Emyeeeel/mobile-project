@@ -8,3 +8,5 @@ final passwordVisibilityProvider =
     StateNotifierProvider<PasswordVisibilityNotifier, bool>((ref) {
   return PasswordVisibilityNotifier();
 });
+
+final uiServiceProvider = Provider((ref) => PhotoDetails());

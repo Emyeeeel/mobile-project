@@ -20,13 +20,13 @@ class AuthServices {
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Dismiss loading indicator
+      Navigator.pop(context); 
       if (e.code == 'user-not-found') {
         showErrorMessage(context, 'User not found');
       } else if (e.code == 'wrong-password') {
         showErrorMessage(context, 'Wrong password');
       } else {
-        showErrorMessage(context, 'Authentication failed'); // Handle other errors
+        showErrorMessage(context, 'Authentication failed.'); 
       }
     }
   }
@@ -36,20 +36,21 @@ class AuthServices {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: const Text('Error logging in'),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context); 
               },
-              child: Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         );
       },
     );
   }
+
   Future<void> signUserOut(BuildContext context) async {
     showDialog(
       context: context, 
@@ -62,15 +63,14 @@ class AuthServices {
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage()));
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Dismiss loading indicator
+      Navigator.pop(context); 
       if (e.code == 'user-not-found') {
         showErrorMessage(context, 'User not found');
       } else if (e.code == 'wrong-password') {
         showErrorMessage(context, 'Wrong password');
       } else {
-        showErrorMessage(context, 'Authentication failed'); // Handle other errors
+        showErrorMessage(context, 'Authentication failed.'); 
       }
     }
-
   }
 }
