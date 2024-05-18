@@ -79,20 +79,20 @@ class AppleButton extends StatelessWidget {
 
 class GenericButton extends StatelessWidget {
   const GenericButton({
-    Key? key,
+    super.key,
     required this.color,
     required this.text,
-    required this.onPressed, // New parameter for onPressed callback
-  }) : super(key: key);
+    required this.onPressed, 
+  });
 
   final Color color;
   final String text;
-  final VoidCallback onPressed; // Callback to be executed when the button is pressed
+  final VoidCallback onPressed; 
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: onPressed, // Use the provided onPressed callback
+      onPressed: onPressed, 
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
       color: color,
