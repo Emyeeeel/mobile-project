@@ -22,6 +22,7 @@ class HomePage extends ConsumerWidget {
             authProvider.signUserOut(context);
           },child: Icon(Icons.exit_to_app)
         ),
+        title: Text('Current user: ' + user.email!),
       ),
       body:  unsplashPhotosAsyncValue.when(
           loading: () => const Center(child: CircularProgressIndicator()),
