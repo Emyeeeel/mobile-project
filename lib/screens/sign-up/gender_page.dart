@@ -17,14 +17,13 @@ class GenderPage extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF000000),
         body: Column(
           children: [
             const SizedBox(height: 35),
             Text(
               'Gender',
               style: GoogleFonts.inter(
-                color: const Color(0xFFEFEFEF),
+                color: const Color(0xFF0F0E0F),
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
@@ -35,14 +34,14 @@ class GenderPage extends ConsumerWidget {
               height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(width: 1, color: const Color(0xFFFFFFFF)),
+                border: Border.all(width: 1, color: const Color(0xFF0F0E0F)),
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: TextField(
                   controller: genderController,
                   style: GoogleFonts.inter(
-                    color: const Color(0xFFFFFFFF),
+                    color: const Color(0xFF0F0E0F),
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
                   ),

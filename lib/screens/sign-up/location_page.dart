@@ -78,7 +78,6 @@ class _LocationPageState extends ConsumerState<LocationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF000000),
       body: Column(
         children: [
           Center(
@@ -92,7 +91,7 @@ class _LocationPageState extends ConsumerState<LocationPage> {
                         Text(
                           'Where do you live?',
                           style: GoogleFonts.inter(
-                            color: const Color(0xFFFFFFFF),
+                            color: const Color(0xFF0F0E0F),
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
                           ),
@@ -101,7 +100,7 @@ class _LocationPageState extends ConsumerState<LocationPage> {
                         Text(
                           'This helps us find you more relevant content. We won’t show it on your profile',
                           style: GoogleFonts.inter(
-                            color: const Color(0xFFFFFFFF),
+                            color: const Color(0xFF0F0E0F),
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           ),
@@ -112,7 +111,7 @@ class _LocationPageState extends ConsumerState<LocationPage> {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(width: 2, color: const Color(0xFFFFFFFF))
+                            border: Border.all(width: 2, color: const Color(0xFF0F0E0F))
                           ),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -131,7 +130,7 @@ class _LocationPageState extends ConsumerState<LocationPage> {
                                   child: Text(
                                     country,
                                     style: GoogleFonts.inter(
-                                      color: const Color(0xFFFFFFFF),
+                                      color: const Color(0xFF0F0E0F),
                                       fontSize: 17,
                                       fontWeight: FontWeight.w400,
                                     ),

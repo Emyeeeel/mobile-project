@@ -23,7 +23,6 @@ class _BirthdayPageState extends ConsumerState<BirthdayPage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF000000),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -48,7 +47,7 @@ class _BirthdayPageState extends ConsumerState<BirthdayPage> {
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           width: 1,
-                          color: const Color(0xFFFFFFFF),
+                          color: const Color(0xFFEFEFEF),
                         ),
                       ),
                       child: Padding(
@@ -56,7 +55,7 @@ class _BirthdayPageState extends ConsumerState<BirthdayPage> {
                         child: TextField(
                           controller: nameController,
                           style: GoogleFonts.inter(
-                            color: const Color(0xFFFFFFFF),
+                            color: const Color(0xFFEFEFEF),
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
                           ),

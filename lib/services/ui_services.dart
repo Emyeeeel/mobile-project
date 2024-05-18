@@ -51,3 +51,11 @@ class PhotoDetails {
     );
   }
 }
+
+class BottomNavigationService extends StateNotifier<int> {
+  BottomNavigationService() : super(0);
+
+  void setSelectedIndex(int index) {
+    state = index;
+  }
+}
