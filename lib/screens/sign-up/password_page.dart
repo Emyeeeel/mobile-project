@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EmailPage extends StatelessWidget {
-  const EmailPage({super.key});
+class PasswordPage extends StatelessWidget {
+  const PasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {

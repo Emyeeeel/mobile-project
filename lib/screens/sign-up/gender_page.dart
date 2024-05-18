@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class EmailPage extends StatelessWidget {
-  const EmailPage({super.key});
+class GenderPage extends StatelessWidget {
+  const GenderPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text('Password Page'),),
+      body: Center(child: Text('Gender Page'),),
     );
   }
 }
