@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/screens/log_in_page.dart';
+import 'package:pinterest_clone/screens/sign-up/email_page.dart';
 import 'package:pinterest_clone/styles.dart';
 
 
@@ -71,7 +72,9 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: (){},
+      onPressed: () async {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => EmailPage()));
+      },
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
       color: AppStyle.colorRed,
