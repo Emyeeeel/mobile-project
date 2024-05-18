@@ -6,119 +6,42 @@ import 'package:pinterest_clone/widgets/button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
 
-class BirthdayPage extends ConsumerStatefulWidget {
-  const BirthdayPage({Key? key}) : super(key: key);
+class BirthdayPage extends ConsumerWidget {
+  const BirthdayPage({super.key});
+
 
   @override
-  _BirthdayPageState createState() => _BirthdayPageState();
-}
-
-class _BirthdayPageState extends ConsumerState<BirthdayPage> {
-  final TextEditingController nameController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
-
-  @override
-  Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
-
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 35),
-              Text(
-                'Full Name',
-                style: GoogleFonts.inter(
-                  color: const Color(0xFFEFEFEF),
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          width: 1,
-                          color: const Color(0xFFEFEFEF),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: TextField(
-                          controller: nameController,
-                          style: GoogleFonts.inter(
-                            color: const Color(0xFFEFEFEF),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                          ),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  NameButton(
-                    onPressed: () {
-                      if (nameController.text.trim().isNotEmpty) {
-                        ref.read(userProvider.notifier).setFullName(nameController.text.trim());
-                      }
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Text(
-                'Birthday',
-                style: GoogleFonts.inter(
-                  color: const Color(0xFFEFEFEF),
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: CupertinoDatePicker(
-                  initialDateTime: selectedDate,
-                  mode: CupertinoDatePickerMode.date,
-                  maximumYear: DateTime.now().year,
-                  minimumYear: DateTime.now().year - 100,
-                  onDateTimeChanged: (DateTime newDate) {
-                    setState(() {
-                      selectedDate = newDate;
-                    });
-                  },
-                ),
-              ),
-              const Spacer(),
-              ButtonWidget(
-                text: 'Next',
-                textColor: 'white',
-                buttonColor: 'red',
-                onPressed: () {
-                  ref.read(userProvider.notifier).setDob(selectedDate);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => GenderPage(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-            ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        Text(
+          'Hey ', 
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(20,0,20,0),
+          child: SizedBox(
+            width: 400,
+            child: Text(
+              textAlign: TextAlign.center,  
+              'To help  keep Pinterest safe, we now require your birthdate. Your birthdate also helps us provide more personalized recommendations and relevant ads. We don’t share this information and it won’t be visible on you profile.',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+            ),
           ),
         ),
-      ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            dateOrder: DatePickerDateOrder.mdy,
+            initialDateTime: DateTime.now(), 
+            onDateTimeChanged: (DateTime newDateTime) {
+            },
+          ),
+        ),
+      ],
     );
   }
 }

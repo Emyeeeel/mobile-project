@@ -15,9 +15,9 @@ class SignUpPage extends ConsumerWidget {
   const SignUpPage({super.key});
 
   static final List<Widget> _widgetOptions = <Widget>[
-    EmailPage(),
+    const EmailPage(),
     PasswordPage(),
-    BirthdayPage(),
+    const BirthdayPage(),
     GenderPage(),
     LocationPage(),
     InterestedInPage()

@@ -74,7 +74,7 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: () async {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
       },
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
