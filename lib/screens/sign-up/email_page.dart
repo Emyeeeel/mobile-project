@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:pinterest_clone/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../providers/user_providers.dart';
+
 class EmailPage extends ConsumerWidget {
   const EmailPage({super.key});
 

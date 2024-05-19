@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinterest_clone/models/user_model.dart';
 import 'package:pinterest_clone/screens/sign-up/location_page.dart';
+
+import '../../providers/user_providers.dart';
 
 final List<String> topics = [
   'Technology',
@@ -95,7 +96,7 @@ class InterestedInPage extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LocationPage(),
+                      builder: (context) => const LocationsPage(),
                     ),
                   );
                 },

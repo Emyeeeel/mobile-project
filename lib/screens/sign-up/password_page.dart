@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
 
 import '../../providers/ui_providers.dart';
+import '../../providers/user_providers.dart';
 import '../../styles.dart';
 
 class PasswordPage extends ConsumerWidget {

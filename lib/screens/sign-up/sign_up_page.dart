@@ -19,7 +19,7 @@ class SignUpPage extends ConsumerWidget {
     PasswordPage(),
     BirthdayPage(),
     GenderPage(),
-    LocationPage(),
+    LocationsPage(),
     InterestedInPage()
   ];
 
@@ -52,7 +52,7 @@ class SignUpPage extends ConsumerWidget {
                   const Spacer(),
                   Row(
                     children: List.generate(
-                      7,
+                      6,
                       (index) => Padding(
                         padding: const EdgeInsets.all(5),
                         child: Icon(

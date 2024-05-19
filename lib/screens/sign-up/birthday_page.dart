@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
 import 'package:pinterest_clone/screens/sign-up/sign_up_page.dart';
 
+import '../../providers/user_providers.dart';
+
 class BirthdayPage extends ConsumerWidget {
   const BirthdayPage({super.key});
   @override

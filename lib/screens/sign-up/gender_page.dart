@@ -6,6 +6,8 @@ import 'package:pinterest_clone/widgets/button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
 
+import '../../providers/user_providers.dart';
+
 class GenderPage extends ConsumerWidget {
   GenderPage({Key? key}) : super(key: key);
 
