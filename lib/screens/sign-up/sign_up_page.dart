@@ -14,10 +14,11 @@ import 'password_page.dart';
 class SignUpPage extends ConsumerWidget {
   const SignUpPage({super.key});
 
+
   static final List<Widget> _widgetOptions = <Widget>[
-    const EmailPage(),
+    EmailPage(),
     PasswordPage(),
-    BirthdayPage(),
+    const BirthdayPage(),
     GenderPage(),
     LocationsPage(),
     InterestedInPage()
@@ -71,7 +72,7 @@ class SignUpPage extends ConsumerWidget {
           const Spacer(),
           MaterialButton(
             onPressed: () {
-                final nextIndex = selectedIndex + 1;
+               final nextIndex = selectedIndex + 1;
                ref.read(bottomNavigationProvider.notifier).setSelectedIndex(nextIndex);
             },
             minWidth: MediaQuery.of(context).size.width - 40,

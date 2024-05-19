@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:pinterest_clone/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/user_providers.dart';
+import 'package:pinterest_clone/models/user_model.dart';
 
 class EmailPage extends ConsumerWidget {
-  const EmailPage({super.key});
+  EmailPage({Key? key}) : super(key: key);
+
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,16 +25,17 @@ class EmailPage extends ConsumerWidget {
           width: MediaQuery.of(context).size.width - 40,
           height: 50,
           child: CupertinoTextField(
-              onChanged: (value){
-                ref.read(userProvider.notifier).setEmail(value.trim());
-              },
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-              placeholder: 'Enter your email address',
-              placeholderStyle: const TextStyle(color: Color(0xFF8E8E8E)),
-              decoration: BoxDecoration(
-                border: Border.all(width: 2, color: CupertinoColors.black),
-                borderRadius: BorderRadius.circular(16),
-              ),
+            controller: textController,
+            onChanged: (value){
+              ref.read(userProvider.notifier).setEmail(value.trim());
+            },
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+            placeholder: 'Enter your email address',
+            placeholderStyle: const TextStyle(color: Color(0xFF8E8E8E)),
+            decoration: BoxDecoration(
+              border: Border.all(width: 2, color: CupertinoColors.black),
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
         ),
       ],
