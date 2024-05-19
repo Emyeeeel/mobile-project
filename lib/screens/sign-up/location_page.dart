@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,33 +48,51 @@ class _LocationPageState extends ConsumerState<LocationPage> {
   }
 
   Future<void> sendUsersData(BuildContext context, WidgetRef ref) async {
-    try {
-      // Get the user data from the provider
-      final user = ref.read(userProvider);
+  try {
+    // Get the user data from the provider
+    final user = ref.read(userProvider);
 
+    // Register the user with Firebase Authentication
+    final UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+          email: user.email!,
+          password: user.password!,
+        );
+
+    // Get the user's UID
+    final uid = userCredential.user?.uid;
+
+    if (uid != null) {
+      // Prepare dateOfBirth as a string
       String dateOfBirthString = user.dateOfBirth!.toIso8601String();
 
+      // Add user data to Firestore
       final firestore = FirebaseFirestore.instance;
-
-      await firestore.collection('users').add({
+      await firestore.collection('users').doc(uid).set({
         'email': user.email,
-        'password': user.password,
         'name': user.name,
         'dateOfBirth': dateOfBirthString,
         'gender': user.gender,
         'location': user.location,
+        'interest': user.selectedTopics,
       });
 
+      // Navigate to the Landing Page
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const LandingPage(),
         ),
       );
-    } catch (e) {
-      print('Error sending user data: $e');
+    } else {
+      throw Exception('Failed to get user UID after registration');
     }
+  } catch (e) {
+    print('Error sending user data: $e');
+    // Optionally show a dialog or snackbar to notify the user of the error
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

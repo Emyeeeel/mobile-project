@@ -13,6 +13,7 @@ class LogInPage extends ConsumerWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTapped = ref.watch(passwordVisibilityProvider);
