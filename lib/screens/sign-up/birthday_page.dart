@@ -2,41 +2,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
+import 'package:pinterest_clone/screens/sign-up/sign_up_page.dart';
 
 class BirthdayPage extends ConsumerWidget {
   const BirthdayPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      children: [
-        SizedBox(
-          child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : DisplayName(),
-        ),
-        const SizedBox(height: 10,),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: SizedBox(
-            width: 400,
-            child: Text(
-              'To help keep Pinterest safe, we now require your birthdate. Your birthdate also helps us provide more personalized recommendations and relevant ads. We don’t share this information and it won’t be visible on your profile.',
-              textAlign: TextAlign.center,  
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 100,
+            child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : DisplayName(),
+          ),
+          const SizedBox(height: 10,),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: SizedBox(
+              width: 400,
+              child: Text(
+                'To help keep Pinterest safe, we now require your birthdate. Your birthdate also helps us provide more personalized recommendations and relevant ads. We don’t share this information and it won’t be visible on your profile.',
+                textAlign: TextAlign.center,  
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 200,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            dateOrder: DatePickerDateOrder.mdy,
-            initialDateTime: DateTime.now(), 
-            onDateTimeChanged: (DateTime newDateTime) {
-            },
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.date,
+              dateOrder: DatePickerDateOrder.mdy,
+              initialDateTime: DateTime.now(), 
+              onDateTimeChanged: (DateTime newDateTime) {
+              },
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
   }
 }
 
@@ -107,7 +110,7 @@ class SetName extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const BirthdayPage(),
+                          builder: (context) => const SignUpPage(),
                         ),
                       );
                     },
@@ -143,7 +146,26 @@ class DisplayName extends ConsumerWidget {
       width: MediaQuery.of(context).size.width,
       height: 100,
       child: Center(
-        child: Text('Hey ${ref.watch(userProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15,0,15,0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Hey ${ref.watch(userProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
+              const SizedBox(width: 10,),
+              IconButton(icon: Icon(Icons.edit), onPressed: () {
+                ref.read(userProvider.notifier).setFullName('');
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpPage(),
+                        ),
+                      );
+              },)
+            ],
+          ),
+        ),
       ),
     );
   }
