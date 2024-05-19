@@ -24,7 +24,7 @@ class LandingPageWidget extends ConsumerWidget {
           const SizedBox(height: 20),
           const SignInButton(),
           const SizedBox(height: 10),
-          LogInButton(),
+          const LogInButton(),
           const SizedBox(height: 15),
           RichText(
             textAlign: TextAlign.center,

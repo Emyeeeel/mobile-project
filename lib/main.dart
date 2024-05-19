@@ -6,7 +6,7 @@ import 'package:pinterest_clone/firebase_options.dart';
 import 'screens/pinterest_clone.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -19,8 +19,6 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: PinterestClonePage()
-    );
+        debugShowCheckedModeBanner: false, home: PinterestClonePage());
   }
 }
