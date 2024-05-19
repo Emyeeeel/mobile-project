@@ -15,64 +15,64 @@ class GenderPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 35),
-            Text(
-              'Gender',
-              style: GoogleFonts.inter(
-                color: const Color(0xFF0F0E0F),
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-              ),
+            Text('What\'s your gender?', style: TextStyle(color: Colors.black, fontSize: 22),),
+            const SizedBox(height: 15,),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20,0,20,0),
+              child: Text('This helps us find you more relevant content. We won’t show it on your profile', style: TextStyle(color: Colors.black, fontSize: 16), textAlign: TextAlign.center,),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 30,),
             Container(
-              width: 380,
-              height: 50,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(width: 1, color: const Color(0xFF0F0E0F)),
+                border: Border.all(color: Colors.black), 
+                borderRadius: BorderRadius.circular(50),
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: TextField(
-                  controller: genderController,
-                  style: GoogleFonts.inter(
-                    color: const Color(0xFF0F0E0F),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
+              child: MaterialButton(
+                onPressed: (){},
+                minWidth: MediaQuery.of(context).size.width - 80,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
                 ),
+                child: Text('Female', style: TextStyle(color: Colors.black, fontSize: 18),),
               ),
             ),
-            const Spacer(),
-            ButtonWidget(
-              text: 'Next',
-              textColor: 'white',
-              buttonColor: 'red',
-              onPressed: () {
-                if (genderController.text.trim().isNotEmpty) {
-                  ref.read(userProvider.notifier).setGender(genderController.text.trim());
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const InterestedInPage(),
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter your gender')),
-                  );
-                }
-              },
+            const SizedBox(height: 10,),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black), 
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: MaterialButton(
+                onPressed: (){},
+                minWidth: MediaQuery.of(context).size.width - 80,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                ),
+                child: Text('Male', style: TextStyle(color: Colors.black, fontSize: 18),),
+              ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10,),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black), 
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: MaterialButton(
+                onPressed: (){},
+                minWidth: MediaQuery.of(context).size.width - 80,
+                height: 50,
+                shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                ),
+                child: Text('Specify Another', style: TextStyle(color: Colors.black, fontSize: 18),),
+              ),
+            ),
           ],
-        ),
-      ),
-    );
+        );
   }
 }
