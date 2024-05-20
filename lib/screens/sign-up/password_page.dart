@@ -11,7 +11,6 @@ class PasswordPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
     final isTapped = ref.watch(passwordVisibilityProvider);
     return Column(
       children: [

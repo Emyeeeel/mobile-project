@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../widgets/main_page.dart';
 import 'landing_page.dart';
-import 'main-screens/home_page.dart';
 
 class PinterestClonePage extends StatelessWidget {
   const PinterestClonePage({super.key});

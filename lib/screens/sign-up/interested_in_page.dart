@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:pinterest_clone/models/photo_model.dart';
 import 'package:pinterest_clone/providers/api_providers.dart';
 import '../../providers/user_providers.dart';
 

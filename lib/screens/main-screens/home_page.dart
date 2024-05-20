@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/api_providers.dart';
 
 import '../../providers/ui_providers.dart';
+import '../../widgets/photo_widgets.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -35,11 +35,16 @@ class HomePage extends ConsumerWidget {
                     child: SizedBox(
                       child: Column(
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Image.network(
-                              photo.photoUrl,
-                              fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photoUrl: photo.photoUrl,)));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.network(
+                                photo.photoUrl,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           const SizedBox(
