@@ -5,7 +5,7 @@ import '../../providers/ui_providers.dart';
 import '../../providers/user_providers.dart';
 
 class PasswordPage extends ConsumerWidget {
-  PasswordPage({Key? key}) : super(key: key);
+  PasswordPage({super.key});
 
   final TextEditingController passwordController = TextEditingController();
 

@@ -24,7 +24,7 @@ class HomePage extends ConsumerWidget {
               authProvider.signUserOut(context);
             },
             child: const Icon(Icons.exit_to_app)),
-        title: Text('Current user: ' + user.email!),
+        title: Text('Current user: ${user.email!}'),
         toolbarHeight: 100,
       ),
       body: unsplashPhotosAsyncValue.when(

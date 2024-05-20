@@ -15,7 +15,7 @@ class BirthdayPage extends ConsumerWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 100,
-          child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : DisplayName(),
+          child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : const DisplayName(),
         ),
         const SizedBox(height: 10,),
         const Padding(

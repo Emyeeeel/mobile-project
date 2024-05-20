@@ -20,7 +20,7 @@ class SignUpPage extends ConsumerWidget {
     EmailPage(),
     PasswordPage(),
     const BirthdayPage(),
-    GenderPage(),
+    const GenderPage(),
     const LocationsPage(),
     const InterestedInPage(),
   ];

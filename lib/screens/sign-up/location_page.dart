@@ -56,11 +56,11 @@ class _LocationsPageState extends ConsumerState<LocationsPage> {
                     child: Column(
                       children: [
                         const SizedBox(height: 30,),
-                        Text(
+                        const Text(
                           'Where do you live?',
                         ),
                         const SizedBox(height: 15,),
-                        Text(
+                        const Text(
                           'This helps us find you more relevant content. We won’t show it on your profile',
                         ),
                         const SizedBox(height: 20,),

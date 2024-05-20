@@ -4,7 +4,7 @@ import '../providers/ui_providers.dart';
 import '../styles.dart';
 
 class FacebookButton extends StatelessWidget {
-  const FacebookButton({Key? key});
+  const FacebookButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class FacebookButton extends StatelessWidget {
 }
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({Key? key});
+  const GoogleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class GoogleButton extends StatelessWidget {
 }
 
 class AppleButton extends StatelessWidget {
-  const AppleButton({Key? key});
+  const AppleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class GenericButton extends StatelessWidget {
 
 
 class EmailTextField extends StatelessWidget {
-  EmailTextField({Key? key, required this.textController});
+  const EmailTextField({super.key, required this.textController});
 
   final TextEditingController textController;
 
@@ -138,7 +138,7 @@ class EmailTextField extends StatelessWidget {
 
 
 class PasswordTextField extends ConsumerWidget {
-  PasswordTextField({Key? key, required this.textController});
+  const PasswordTextField({super.key, required this.textController});
 
   final TextEditingController textController;
 

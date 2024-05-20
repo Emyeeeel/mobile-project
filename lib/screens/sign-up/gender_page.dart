@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/user_providers.dart';
 
 class GenderPage extends ConsumerStatefulWidget {
-  GenderPage({Key? key}) : super(key: key);
+  const GenderPage({super.key});
 
   @override
   _GenderPageState createState() => _GenderPageState();
@@ -25,7 +25,7 @@ class _GenderPageState extends ConsumerState<GenderPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           'What\'s your gender?',
           style: TextStyle(color: Colors.black, fontSize: 22),
         ),
@@ -77,7 +77,7 @@ class _GenderPageState extends ConsumerState<GenderPage> {
 }
 
 class GenderButton extends StatelessWidget {
-  GenderButton({Key? key, required this.buttonText, required this.isSelected, required this.onPressed});
+  const GenderButton({super.key, required this.buttonText, required this.isSelected, required this.onPressed});
 
   final String buttonText;
   final bool isSelected;
@@ -98,7 +98,7 @@ class GenderButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         color: isSelected ? const Color(0xFFd3d8db) : null,
-        child: Text(buttonText, style: TextStyle(color: Colors.black, fontSize: 18),),
+        child: Text(buttonText, style: const TextStyle(color: Colors.black, fontSize: 18),),
       ),
     );
   }

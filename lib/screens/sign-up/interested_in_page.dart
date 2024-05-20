@@ -21,7 +21,7 @@ final List<String> topics = [
 ];
 
 class InterestedInPage extends ConsumerWidget {
-  const InterestedInPage({Key? key}) : super(key: key);
+  const InterestedInPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,7 +81,7 @@ class InterestedInPage extends ConsumerWidget {
                           Center(
                             child: Text(
                               topic,
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ],
