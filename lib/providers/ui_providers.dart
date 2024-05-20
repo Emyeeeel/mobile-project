@@ -1,7 +1,4 @@
-
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../services/ui_services.dart';
 
 final passwordVisibilityProvider =
@@ -14,3 +11,4 @@ final uiServiceProvider = Provider((ref) => PhotoDetails());
 final bottomNavigationProvider = StateNotifierProvider<BottomNavigationService, int>((ref) {
   return BottomNavigationService();
 });
+
