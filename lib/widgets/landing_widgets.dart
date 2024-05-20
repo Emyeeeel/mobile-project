@@ -1,28 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/screens/log_in_page.dart';
 import 'package:pinterest_clone/screens/sign-up/email_page.dart';
-import 'package:pinterest_clone/screens/sign-up/gender_page.dart';
-import 'package:pinterest_clone/screens/sign-up/interested_in_page.dart';
-import 'package:pinterest_clone/screens/sign-up/location_page.dart';
+import 'package:pinterest_clone/screens/sign-up/sign_up_page.dart';
 import 'package:pinterest_clone/styles.dart';
-
-import '../screens/sign-up/birthday_page.dart';
-import '../screens/sign-up/password_page.dart';
 
 
 class LandingPageWidget extends ConsumerWidget {
   const LandingPageWidget({super.key});
-
-  static final List<Widget> _widgetOptions = <Widget>[
-    EmailPage(),
-    PasswordPage(),
-    BirthdayPage(),
-    GenderPage(),
-    LocationPage(),
-    InterestedInPage()
-  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,9 +24,9 @@ class LandingPageWidget extends ConsumerWidget {
           const SizedBox(height: 50),
           const Text('Welcome to Pinterest', style: AppStyle.landingHeader),
           const SizedBox(height: 20),
-          SignInButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const EmailPage())); },),
+          const SignInButton(),
           const SizedBox(height: 10),
-          const LogInButton(),
+          LogInButton(),
           const SizedBox(height: 15),
           RichText(
             textAlign: TextAlign.center,
@@ -83,12 +68,14 @@ class LandingPageWidget extends ConsumerWidget {
 }
 
 class SignInButton extends StatelessWidget {
-  const SignInButton({super.key, required this.onPressed});
-  final VoidCallback onPressed; 
+  const SignInButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: onPressed,
+      onPressed: () async {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
+      },
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
       color: AppStyle.colorRed,

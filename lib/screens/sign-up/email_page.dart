@@ -1,38 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/styles.dart';
 
-import '../../providers/sign_in_providers.dart';
+import '../../providers/user_providers.dart';
 
 class EmailPage extends ConsumerWidget {
-  const EmailPage({super.key});
+  EmailPage({Key? key}) : super(key: key);
+
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController emailTextEditingController = TextEditingController();
     return Column(
       children: [
         const Text(
           'What\'s your email?', 
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppStyle.colorBlack, fontWeight: FontWeight.w600, fontSize: 22, fontFamily: 'Inter'),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 10,),
         SizedBox(
           width: MediaQuery.of(context).size.width - 40,
           height: 50,
           child: CupertinoTextField(
-              controller: emailTextEditingController, 
-              onChanged: (value){
-                ref.read(emailStringValueProvider.notifier).state = value;
-              },
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-              placeholder: 'Enter your email address',
-              placeholderStyle: const TextStyle(color:  Color(0xFF91908F)),
-              decoration: BoxDecoration(
-                border: Border.all(width: 2, color: const Color(0xFF7F7A79)),
-                borderRadius: BorderRadius.circular(16),
-              ),
+            controller: textController,
+            onChanged: (value){
+              ref.read(userProvider.notifier).setEmail(value.trim());
+            },
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+            placeholder: 'Enter your email address',
+            placeholderStyle: const TextStyle(color: Color(0xFF8E8E8E)),
+            decoration: BoxDecoration(
+              border: Border.all(width: 2, color: CupertinoColors.black),
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
         ),
       ],
