@@ -7,56 +7,59 @@ import '../../providers/user_providers.dart';
 
 class BirthdayPage extends ConsumerWidget {
   const BirthdayPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 100,
-            child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : DisplayName(),
-          ),
-          const SizedBox(height: 10,),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: SizedBox(
-              width: 400,
-              child: Text(
-                'To help keep Pinterest safe, we now require your birthdate. Your birthdate also helps us provide more personalized recommendations and relevant ads. We don’t share this information and it won’t be visible on your profile.',
-                textAlign: TextAlign.center,  
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              ),
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 100,
+          child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : DisplayName(),
+        ),
+        const SizedBox(height: 10,),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: SizedBox(
+            width: 400,
+            child: Text(
+              'To help keep Pinterest safe, we now require your birthdate. Your birthdate also helps us provide more personalized recommendations and relevant ads. We don’t share this information and it won’t be visible on your profile.',
+              textAlign: TextAlign.center,  
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.date,
-              dateOrder: DatePickerDateOrder.mdy,
-              initialDateTime: DateTime.now(), 
-              onDateTimeChanged: (DateTime newDateTime) {
-                ref.read(userProvider.notifier).setDob(newDateTime);
-              },
-            ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: 200,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            dateOrder: DatePickerDateOrder.mdy,
+            initialDateTime: DateTime.now(), 
+            onDateTimeChanged: (DateTime newDateTime) {
+              ref.read(userProvider.notifier).setDob(newDateTime);
+            },
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
 class SetName extends ConsumerWidget {
-   SetName({super.key});
-   TextEditingController nameTextController = TextEditingController();
+  SetName({super.key});
+
+  final TextEditingController nameTextController = TextEditingController();
   late String userName;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: 100,
-          child: Column(
-            children: [
-              const Text(
+      width: MediaQuery.of(context).size.width,
+      height: 100,
+      child: Column(
+        children: [
+          const Text(
             'Hey ', 
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
@@ -132,10 +135,10 @@ class SetName extends ConsumerWidget {
                 ],
               ),
             ),
-        ),
-            ],
           ),
-        );
+        ],
+      ),
+    );
   }
 }
 
@@ -156,14 +159,14 @@ class DisplayName extends ConsumerWidget {
             children: [
               Text('Hey ${ref.watch(userProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
               const SizedBox(width: 10,),
-              IconButton(icon: Icon(Icons.edit), onPressed: () {
+              IconButton(icon: const Icon(Icons.edit), onPressed: () {
                 ref.read(userProvider.notifier).setFullName('');
                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignUpPage(),
-                        ),
-                      );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SignUpPage(),
+                  ),
+                );
               },)
             ],
           ),

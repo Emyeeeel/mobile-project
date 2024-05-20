@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/providers/auth_providers.dart';
+import 'package:pinterest_clone/providers/user_providers.dart';
 import 'package:pinterest_clone/screens/sign-up/gender_page.dart';
 import 'package:pinterest_clone/screens/sign-up/interested_in_page.dart';
 import 'package:pinterest_clone/screens/sign-up/location_page.dart';
-
 import '../../providers/ui_providers.dart';
 import '../landing_page.dart';
 import 'birthday_page.dart';
@@ -20,8 +21,8 @@ class SignUpPage extends ConsumerWidget {
     PasswordPage(),
     const BirthdayPage(),
     GenderPage(),
-    LocationsPage(),
-    InterestedInPage()
+    const LocationsPage(),
+    const InterestedInPage(),
   ];
 
   @override
@@ -73,7 +74,13 @@ class SignUpPage extends ConsumerWidget {
           MaterialButton(
             onPressed: () {
                final nextIndex = selectedIndex + 1;
-               ref.read(bottomNavigationProvider.notifier).setSelectedIndex(nextIndex);
+               if(selectedIndex == _widgetOptions.length - 1){
+                final auth = ref.watch(authServicesProvider);
+                auth.sendUsersData(context, ref);
+               }
+               else{
+                ref.read(bottomNavigationProvider.notifier).setSelectedIndex(nextIndex);
+               }
             },
             minWidth: MediaQuery.of(context).size.width - 40,
             height: 50,
@@ -91,6 +98,25 @@ class SignUpPage extends ConsumerWidget {
           const SizedBox(height: 25,),
         ],
       ),
+    );
+  }
+}
+
+class DisplayUserData extends ConsumerWidget {
+  const DisplayUserData({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider);
+    return Column(
+      children: [
+        Text('Email: ${user.email}'),
+        Text('Password: ${user.password}'),
+        Text('Name: ${user.name}'),
+        Text('Birthday: ${user.dateOfBirth!.toIso8601String()}'),
+        Text('Location: ${user.location}'),
+        Text('Selected Topc: ${user.selectedTopics[0]} ${user.selectedTopics[1]} ${user.selectedTopics[2]} ${user.selectedTopics[3]} ${user.selectedTopics[4]}'),
+      ],
     );
   }
 }

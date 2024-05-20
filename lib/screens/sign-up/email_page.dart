@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/user_providers.dart';
-import 'package:pinterest_clone/models/user_model.dart';
 
 class EmailPage extends ConsumerWidget {
   EmailPage({Key? key}) : super(key: key);
@@ -11,8 +10,6 @@ class EmailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
-
     return Column(
       children: [
         const Text(

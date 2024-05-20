@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pinterest_clone/screens/sign-up/interested_in_page.dart';
-import 'package:pinterest_clone/screens/sign-up/location_page.dart';
-import 'package:pinterest_clone/widgets/button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/models/user_model.dart';
 
 import '../../providers/user_providers.dart';
 
@@ -102,7 +97,7 @@ class GenderButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        color: isSelected ? Colors.blueGrey : null,
+        color: isSelected ? const Color(0xFFd3d8db) : null,
         child: Text(buttonText, style: TextStyle(color: Colors.black, fontSize: 18),),
       ),
     );
