@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/screens/main-screens/home_page.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../providers/user_providers.dart';
 import '../screens/landing_page.dart';
 
 class AuthServices {
@@ -71,6 +73,50 @@ class AuthServices {
       } else {
         showErrorMessage(context, 'Authentication failed.'); 
       }
+    }
+  }
+
+  Future<void> createUser(BuildContext context, WidgetRef ref) async {
+    try{
+      final user = ref.read(userProvider);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: user.email!, 
+        password: user.password!
+      );
+    }catch (e){
+      print('Error creating user: $e');
+    }
+  }
+
+  Future<void> sendUsersData(BuildContext context, WidgetRef ref) async {
+    try {
+      final user = ref.read(userProvider);
+
+      String dateOfBirthString = user.dateOfBirth!.toIso8601String();
+
+      final firestore = FirebaseFirestore.instance;
+
+      await firestore.collection('users').add({
+        'email': user.email,
+        'password': user.password,
+        'name': user.name,
+        'dateOfBirth': dateOfBirthString,
+        'gender': user.gender,
+        'location': user.location,
+        'selectedTopics': user.selectedTopics
+      });
+      createUser(context, ref);
+      showDialog(
+        context: context, 
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        }
+      );
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage())
+    );
+    } catch (e) {
+      print('Error sending user data: $e');
     }
   }
 }

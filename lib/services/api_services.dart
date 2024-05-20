@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../models/country_state.dart';
 import '../models/photo_model.dart';
 
 class ApiService {
@@ -22,7 +23,7 @@ class ApiService {
     int page = 1;
     while (allPhotos.length < 100) {
       final response = await http.get(Uri.parse(
-          '$_baseUrl/photos?per_page=50&page=$page&client_id=N__PKKjjE_rGt2fsn4xs_HXE0ajm7pLn5MJxUDMIHCk'));
+          '$_baseUrl/photos?per_page=50&page=$page&client_id=$_clientId'));
       if (response.statusCode == 200) {
         final List<dynamic> photosData = jsonDecode(response.body);
         final List<UnsplashPhoto> photos =
@@ -34,5 +35,61 @@ class ApiService {
       }
     }
     return allPhotos;
+  }
+
+  Future<List<UnsplashPhoto>> getPhoto(List<String> topics) async {
+    List<UnsplashPhoto> topicPhotos = [];
+    try {
+      for (String topic in topics) {
+        final response = await http.get(Uri.parse(
+            '$_baseUrl/photos/random?query=$topic&client_id=$_clientId'));
+        if (response.statusCode == 200) {
+          final dynamic responseData = jsonDecode(response.body);
+          if (responseData is List<dynamic>) {
+            final List<UnsplashPhoto> photos = responseData
+                .map((json) => UnsplashPhoto.fromJson(json))
+                .toList();
+            topicPhotos.addAll(photos);
+          } else if (responseData is Map<String, dynamic>) {
+            final UnsplashPhoto photo = UnsplashPhoto.fromJson(responseData);
+            topicPhotos.add(photo);
+          } else {
+            throw Exception('Unexpected response format');
+          }
+        } else {
+          throw Exception('Failed to load photos');
+        }
+      }
+      return topicPhotos;
+    } catch (e) {
+      print('Exception: ${e.toString()}');
+      throw Exception(e.toString());
+    }
+  }
+
+}
+
+class CountryStateCityRepo {
+  static const countriesStateURL =
+      'https://countriesnow.space/api/v0.1/countries/states';
+
+  Future<CountryStateModel> getCountriesStates() async {
+    try {
+      var url = Uri.parse(countriesStateURL);
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        final CountryStateModel responseModel =
+            countryStateModelFromJson(response.body);
+        return responseModel;
+      } else {
+        return CountryStateModel(
+            error: true,
+            msg: 'Something went wrong: ${response.statusCode}',
+            data: []);
+      }
+    } catch (e) {
+      print('Exception: ${e.toString()}');
+      throw Exception(e.toString());
+    }
   }
 }

@@ -4,7 +4,7 @@ import '../providers/ui_providers.dart';
 import '../styles.dart';
 
 class FacebookButton extends StatelessWidget {
-  const FacebookButton({super.key});
+  const FacebookButton({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class FacebookButton extends StatelessWidget {
 }
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({super.key});
+  const GoogleButton({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class GoogleButton extends StatelessWidget {
 }
 
 class AppleButton extends StatelessWidget {
-  const AppleButton({super.key});
+  const AppleButton({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,13 +64,8 @@ class AppleButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.apple,
-              size: 20,
-            ),
-            SizedBox(
-              width: 5,
-            ),
+            Icon(Icons.apple, size: 20,),
+            SizedBox(width: 5,),
             Text(
               'Continue with Apple',
               style: AppStyle.appleButton,
@@ -87,18 +82,17 @@ class GenericButton extends StatelessWidget {
     super.key,
     required this.color,
     required this.text,
-    required this.onPressed, // New parameter for onPressed callback
+    required this.onPressed, 
   });
 
   final Color color;
   final String text;
-  final VoidCallback
-      onPressed; // Callback to be executed when the button is pressed
+  final VoidCallback onPressed; 
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: onPressed, // Use the provided onPressed callback
+      onPressed: onPressed, 
       minWidth: MediaQuery.of(context).size.width - 80,
       height: 50,
       color: color,
@@ -113,8 +107,9 @@ class GenericButton extends StatelessWidget {
   }
 }
 
+
 class EmailTextField extends StatelessWidget {
-  const EmailTextField({super.key, required this.textController});
+  EmailTextField({Key? key, required this.textController});
 
   final TextEditingController textController;
 
@@ -124,8 +119,9 @@ class EmailTextField extends StatelessWidget {
       width: MediaQuery.of(context).size.width - 80,
       height: 50,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          border: Border.all(width: 2, color: AppStyle.borderColor)),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(width: 2, color: AppStyle.borderColor)
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
         child: TextField(
@@ -140,8 +136,9 @@ class EmailTextField extends StatelessWidget {
   }
 }
 
+
 class PasswordTextField extends ConsumerWidget {
-  const PasswordTextField({super.key, required this.textController});
+  PasswordTextField({Key? key, required this.textController});
 
   final TextEditingController textController;
 
@@ -153,7 +150,7 @@ class PasswordTextField extends ConsumerWidget {
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(width: 2, color: AppStyle.borderColor),
+        border: Border.all(width: 2, color: AppStyle.borderColor), 
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -176,9 +173,7 @@ class PasswordTextField extends ConsumerWidget {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  ref
-                      .read(passwordVisibilityProvider.notifier)
-                      .toggleVisibilityIcon();
+                  ref.read(passwordVisibilityProvider.notifier).toggleVisibilityIcon();
                 },
               ),
             ),

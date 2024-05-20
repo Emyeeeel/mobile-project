@@ -25,6 +25,7 @@ class HomePage extends ConsumerWidget {
             },
             child: const Icon(Icons.exit_to_app)),
         title: Text('Current user: ' + user.email!),
+        toolbarHeight: 100,
       ),
       body: unsplashPhotosAsyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),

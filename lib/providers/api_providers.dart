@@ -14,3 +14,17 @@ final homePagePhotosProvider = FutureProvider<List<UnsplashPhoto>>((ref) async {
   final service = ApiService();
   return service.fetchPhotos();
 });
+
+final photoProvider = FutureProvider<List<UnsplashPhoto>>((ref) async {
+  final service = ApiService();
+  return service.fetchPhotos();
+});
+
+final topicPhotosProvider = FutureProvider.family<List<UnsplashPhoto>, List<String>>((ref, topics) async {
+  final service = ref.read(apiServiceProvider);
+  return service.getPhoto(topics);
+});
+
+
+
+
