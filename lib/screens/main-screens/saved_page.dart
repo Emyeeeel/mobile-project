@@ -15,7 +15,7 @@ class SavedPage extends ConsumerWidget {
           const SizedBox(height: 20,),
           MaterialButton(
             onPressed: (){
-              auth.signUserOut(context);
+              auth.signUserOut(context, ref);
             },
             minWidth: 250,
             height: 80,

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pinterest_clone/providers/ui_providers.dart';
 import 'package:pinterest_clone/widgets/main_page.dart';
 import '../providers/user_providers.dart';
 import '../screens/landing_page.dart';
@@ -53,7 +54,7 @@ class AuthServices {
     );
   }
 
-  Future<void> signUserOut(BuildContext context) async {
+  Future<void> signUserOut(BuildContext context, WidgetRef ref) async {
     showDialog(
       context: context, 
       builder: (context) {
@@ -62,6 +63,7 @@ class AuthServices {
     );
     try {
       await FirebaseAuth.instance.signOut();
+      ref.watch(bottomNavigationProvider.notifier).setSelectedIndex(0);
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => const LandingPage()));
     } on FirebaseAuthException catch (e) {
