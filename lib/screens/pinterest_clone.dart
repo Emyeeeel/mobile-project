@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/main_page.dart';
 import 'landing_page.dart';
 import 'main-screens/home_page.dart';
 
@@ -16,7 +17,7 @@ class PinterestClonePage extends StatelessWidget {
           // print("Auth state changed: ${snapshot.connectionState}");
           if (snapshot.hasData){
             // print("User is logged in: ${snapshot.data?.email}");
-            return HomePage();
+            return const MainPage();
           }
           else{
             // print("User is not logged in");

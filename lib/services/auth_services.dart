@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/screens/main-screens/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pinterest_clone/widgets/main_page.dart';
 import '../providers/user_providers.dart';
 import '../screens/landing_page.dart';
 
@@ -20,7 +20,7 @@ class AuthServices {
         password: password, 
       );
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); 
       if (e.code == 'user-not-found') {
