@@ -108,6 +108,7 @@ class AuthServices {
         'selectedTopics': user.selectedTopics
       });
       createUser(context, ref);
+      resetUserInfo(context, ref);
       showDialog(
         context: context, 
         builder: (context) {
@@ -120,5 +121,10 @@ class AuthServices {
     } catch (e) {
       print('Error sending user data: $e');
     }
+  }
+
+  Future<void> resetUserInfo (BuildContext context, WidgetRef ref) async{
+    final user = ref.read(userProvider.notifier);
+    user.resetUser();
   }
 }

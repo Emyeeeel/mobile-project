@@ -38,6 +38,18 @@ class UserProvider extends StateNotifier<User> {
   void removeTopic(String topic) {
     state = state.copyWith(selectedTopics: state.selectedTopics.where((t) => t != topic).toList());
   }
+
+  void resetUser() {
+  state = User(
+    email: '',
+    password: '',
+    name: '',
+    dateOfBirth: null,
+    gender: '',
+    location: '',
+    selectedTopics: [],
+  );
+}
 }
 
 final userProvider = StateNotifierProvider<UserProvider, User>((ref) {

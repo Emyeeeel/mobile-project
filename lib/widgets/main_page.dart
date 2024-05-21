@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 //import 'package:flutter/widgets.dart';
 
@@ -26,28 +27,32 @@ class MainPage extends ConsumerWidget {
     return Scaffold(
       body: _widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home_filled, color: Color(0xFF797979)),
             activeIcon: Icon(Icons.home_filled, color: Color(0xFF111111)),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.search, color: Color(0xFF797979)),
             activeIcon: Icon(Icons.search, color: Color(0xFF111111)),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: Color(0xFF797979)),
-            activeIcon: Icon(Icons.add, color: Color(0xFF111111)),
+            icon: const Icon(Icons.add, color: Color(0xFF797979)),
+            activeIcon: GestureDetector(
+              onTap: (){
+                ref.watch(createPinUIProvider).showCreatePanel(context);
+              },
+              child: const Icon(Icons.add, color: Color(0xFF111111))),
             label: 'Create',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.chat, color: Color(0xFF797979)),
             activeIcon: Icon(Icons.chat, color: Color(0xFF111111)),
             label: 'Inbox',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.circle, color: Color(0xFF797979)),
             activeIcon: Icon(Icons.circle, color: Color(0xFF111111)),
             label: 'Saved',

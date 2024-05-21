@@ -12,3 +12,4 @@ final bottomNavigationProvider = StateNotifierProvider<BottomNavigationService, 
   return BottomNavigationService();
 });
 
+final createPinUIProvider = Provider((ref) => CreatePin());
