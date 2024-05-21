@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/models/user_model.dart';
 import 'package:pinterest_clone/providers/auth_providers.dart';
 
 
@@ -98,6 +102,96 @@ class SavedPage extends ConsumerWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class TestPage extends StatefulWidget {
+  const TestPage({Key? key}) : super(key: key);
+
+  @override
+  State<TestPage> createState() => _TestPageState();
+}
+
+class _TestPageState extends State<TestPage> {
+  List<String> docIds = [];
+
+  Future<void> getDocID() async {
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+    snapshot.docs.forEach((document) {
+      docIds.add(document.reference.id);
+    });
+  }
+
+  String userID = FirebaseAuth.instance.currentUser!.uid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Test Page')),
+      body: Column(
+        children: [
+          Text('User Table: '),
+          Expanded(
+            child: FutureBuilder(
+              future: getDocID(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  // Check if docIds is empty before building ListView.builder
+                  if (docIds.isEmpty) {
+                    return Center(child: Text('No data available'));
+                  } else {
+                    return ListView.builder(
+                      itemCount: docIds.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: GetUserName(documentId: docIds[index]),
+                        );
+                      },
+                    );
+                  }
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GetUserName extends StatelessWidget {
+  GetUserName({Key? key, required this.documentId}) : super(key: key);
+
+  final String documentId;
+  Map<String, dynamic> data = {};
+  @override
+  Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(documentId).get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          data = snapshot.data!.data() as Map<String, dynamic>;
+          DateTime dateOfBirth = DateTime.parse(data['dateOfBirth']);
+          List<dynamic> selectedTopicsDynamic = data['selectedTopics'] ?? [];
+          List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
+          UserModel currentUser = UserModel(
+            email: data['email'], 
+            password: data['password'], 
+            name: data['name'], 
+            dateOfBirth: dateOfBirth,
+            gender: data['gender'], 
+            location: data['location'], 
+            selectedTopics: selectedTopics
+          );
+          return Text('Name: ${currentUser.name}\nEmail: ${currentUser.email}');
+        }
+        return Text('Loading...');
+      },
     );
   }
 }

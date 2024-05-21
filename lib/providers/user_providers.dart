@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/user_model.dart';
 
-class UserProvider extends StateNotifier<User> {
-  UserProvider(User state) : super(state);
+class UserProvider extends StateNotifier<UserModel> {
+  UserProvider(UserModel state) : super(state);
 
   void setEmail(String email) {
     state = state.copyWith(email: email);
@@ -56,8 +56,8 @@ class UserProvider extends StateNotifier<User> {
   }
 }
 
-final userProvider = StateNotifierProvider<UserProvider, User>((ref) {
-  return UserProvider(User(
+final userProvider = StateNotifierProvider<UserProvider, UserModel>((ref) {
+  return UserProvider(UserModel(
     email: '',
     password: '',
     name: '',

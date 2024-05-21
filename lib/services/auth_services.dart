@@ -127,4 +127,5 @@ class AuthServices {
     final user = ref.read(userProvider.notifier);
     user.resetUser();
   }
+
 }

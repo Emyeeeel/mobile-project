@@ -9,15 +9,16 @@ import '../screens/main-screens/create_page.dart';
 import '../screens/main-screens/inbox_page.dart';
 import '../screens/main-screens/saved_page.dart';
 import '../screens/main-screens/search_page.dart';
+import '../screens/main-screens/test_page.dart';
 
 class MainPage extends ConsumerWidget {
   const MainPage({super.key});
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const SearchPage(),
+    UserInfoPage(),
     const CreatePage(),
-    const InboxPage(),
+    TestPage(),
     const SavedPage(),
   ];
 

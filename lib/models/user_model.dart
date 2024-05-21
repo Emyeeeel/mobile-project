@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   final String? email;
   final String? password;
   final String? name;
@@ -7,7 +7,7 @@ class User {
   final String? location;
   final List<String> selectedTopics;
 
-  User({
+  UserModel({
     required this.email,
     required this.password,
     required this.name,
@@ -17,7 +17,7 @@ class User {
     required this.selectedTopics,
   });
 
-  User copyWith({
+  UserModel copyWith({
     String? email,
     String? password,
     String? name,
@@ -26,7 +26,7 @@ class User {
     String? location,
     List<String>? selectedTopics,
   }) {
-    return User(
+    return UserModel(
       email: email ?? this.email,
       password: password ?? this.password,
       name: name ?? this.name,
