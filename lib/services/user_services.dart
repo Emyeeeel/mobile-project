@@ -8,7 +8,7 @@ class UserServices {
   List<Map<String, dynamic>> userInfoList = [];
   Map<String, dynamic> currentUserData = {};
 
-  User currentUser = FirebaseAuth.instance.currentUser!;
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
   Future<void> getDocID() async {
     QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -32,9 +32,9 @@ class UserServices {
     await getDocID();
     await getAllUsersInfo();
     for (int i = 0; i < userInfoList.length; i++) {
-      if (userInfoList[i]['email'] == currentUser.email) {
+      if (userInfoList[i]['email'] == currentUser.email!) {
         currentUserData = userInfoList[i];
-        break; // Exit loop once found
+        break; 
       }
     }
 
@@ -53,4 +53,5 @@ class UserServices {
     );
     return userDetails;
   }
+
 }

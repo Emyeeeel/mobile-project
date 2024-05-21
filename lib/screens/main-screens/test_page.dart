@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../models/user_model.dart';
 import '../../providers/auth_providers.dart';
+import '../../providers/user_providers.dart';
 import '../../services/user_services.dart';
 
 class ExamplePage extends StatelessWidget {
@@ -65,7 +66,6 @@ class ExamplePage extends StatelessWidget {
   }
 }
 
-final userServicesProvider = Provider((ref) => UserServices());
 
 class UserInfoPage extends ConsumerWidget {
   const UserInfoPage({super.key});
@@ -79,7 +79,7 @@ class UserInfoPage extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading state
-          return CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           // Error state
           return Text('Error: ${snapshot.error}');

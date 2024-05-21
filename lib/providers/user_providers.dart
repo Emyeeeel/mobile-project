@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/user_model.dart';
+import '../services/user_services.dart';
 
 class UserProvider extends StateNotifier<UserModel> {
   UserProvider(UserModel state) : super(state);
@@ -67,3 +68,5 @@ final userProvider = StateNotifierProvider<UserProvider, UserModel>((ref) {
     selectedTopics: [],
   ));
 });
+
+final userServicesProvider = Provider((ref) => UserServices());
