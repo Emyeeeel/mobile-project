@@ -39,17 +39,21 @@ class UserProvider extends StateNotifier<User> {
     state = state.copyWith(selectedTopics: state.selectedTopics.where((t) => t != topic).toList());
   }
 
+  void setSelectedTopics(List<String> selectedTopics) {
+    state = state.copyWith(selectedTopics: selectedTopics);
+  }
+
   void resetUser() {
-  state = User(
-    email: '',
-    password: '',
-    name: '',
-    dateOfBirth: null,
-    gender: '',
-    location: '',
-    selectedTopics: [],
-  );
-}
+    state = state.copyWith(
+      email: '',
+      password: '',
+      name: '',
+      dateOfBirth: null,
+      gender: '',
+      location: '',
+      selectedTopics: [],
+    );
+  }
 }
 
 final userProvider = StateNotifierProvider<UserProvider, User>((ref) {
