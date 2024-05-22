@@ -6,7 +6,7 @@ import '../providers/user_providers.dart';
 import '../screens/main-screens/home_page.dart';
 import '../screens/main-screens/create_page.dart';
 import '../screens/main-screens/inbox_page.dart';
-import '../screens/main-screens/saved_page.dart';
+import '../screens/main-screens/saved_page/saved_page.dart';
 import '../screens/main-screens/search_page.dart';
 import '../screens/main-screens/test_page.dart';
 
@@ -64,10 +64,20 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF404040)
               ),
               child: Center(
-                child: Text(user.name!.substring(0, 1), style: TextStyle(color: Colors.white),),
+                child: Text(user.name!.substring(0, 1), style: const TextStyle(color: Colors.white),),
               ),
             ),
-            activeIcon: Icon(Icons.circle, color: Color(0xFF111111)),
+            activeIcon: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: const Color(0xFF111111)
+              ),
+              child: Center(
+                child: Text(user.name!.substring(0, 1), style: const TextStyle(color: Colors.white),),
+              ),
+            ),
             label: 'Saved',
           ),
         ],
