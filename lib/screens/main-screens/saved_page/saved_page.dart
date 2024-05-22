@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/providers/auth_providers.dart';
@@ -8,8 +10,12 @@ import 'package:pinterest_clone/providers/pinterest_user_provider.dart';
 import '../../../providers/user_providers.dart';
 import 'settings_page.dart';
 
+// ignore: must_be_immutable
 class SavedPage extends ConsumerWidget {
-  const SavedPage({super.key});
+  SavedPage({super.key});
+
+  bool isPinsClicked = true;
+  bool isBoardsClicked = false;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,11 +80,20 @@ class SavedPage extends ConsumerWidget {
                   height: 20,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: const Color(0xFF404040)
+                  ),
+                  child: SvgPicture.asset( 
+                    'lib/assets/logo_svg.svg',
+                    width: 20,
+                    height: 20,
+                    color: Colors.black, 
                   ),
                 ),
               ),
-              Text(service.truncateEmail(user.userName!), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+              const SizedBox(width: 2.5,),
+              Text(
+                service.truncateEmail(user.userName!),
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
               const Spacer(),
             ],
           ),
@@ -116,15 +131,60 @@ class SavedPage extends ConsumerWidget {
             child: const Text('Edit Profile', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Color(0xFFA3A3A3)),),
           ),
           const SizedBox(height: 20,),
-          const Row(
+          Row(
             children: [
-              Spacer(),
-              Text('Pins'),
-              SizedBox(width: 40,),
-              Text('Boards'),
-              Spacer(),
+              const Spacer(),
+              GestureDetector(
+                onTap: (){
+                  isPinsClicked = true;
+                  isBoardsClicked = false;
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: isPinsClicked ? Colors.black : Colors.transparent, 
+                        width: 2.0, 
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Pins',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                )
+              ),
+              const SizedBox(width: 40,),
+              GestureDetector(
+                onTap: (){
+                  isBoardsClicked = true;
+                  isPinsClicked = false;
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: isBoardsClicked ? Colors.black : Colors.transparent, 
+                        width: 2.0, 
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Boards',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ) 
+              ),
+              const Spacer(),
             ],
           ),
+          const SizedBox(height: 20,),
           Row(
             children: [
               SizedBox(width: 20,),
@@ -160,15 +220,15 @@ class SavedPage extends ConsumerWidget {
               SizedBox(width: 20,),
             ],
           ),
-          Center(
-            child: Text('Current user UID: ${service.currentUser.uid}'),
-          ),
-          Text('Email: ${user.currentUser!.email}'),
-          Text('Name: ${user.currentUser!.name}'),
-          Text('Date of Birth: ${user.currentUser!.dateOfBirth}'),
-          Text('Gender: ${user.currentUser!.gender}'),
-          Text('Location: ${user.currentUser!.location}'),
-          Text('Selected Topics: ${user.currentUser!.selectedTopics}'),
+          // Center(
+          //   child: Text('Current user UID: ${service.currentUser.uid}'),
+          // ),
+          // Text('Email: ${user.currentUser!.email}'),
+          // Text('Name: ${user.currentUser!.name}'),
+          // Text('Date of Birth: ${user.currentUser!.dateOfBirth}'),
+          // Text('Gender: ${user.currentUser!.gender}'),
+          // Text('Location: ${user.currentUser!.location}'),
+          // Text('Selected Topics: ${user.currentUser!.selectedTopics}'),
         ],
       ),
     );

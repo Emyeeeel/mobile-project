@@ -18,7 +18,7 @@ class MainPage extends ConsumerWidget {
     const SearchPage(),
     const CreatePage(),
     const InboxPage(),
-    const SavedPage(),
+    SavedPage(),
   ];
 
   @override
