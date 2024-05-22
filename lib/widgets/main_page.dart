@@ -1,9 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-//import 'package:flutter/widgets.dart';
 
 import '../providers/ui_providers.dart';
 import '../providers/user_providers.dart';
@@ -19,7 +15,7 @@ class MainPage extends ConsumerWidget {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    UserInfoPage(),
+    SearchPage(),
     const CreatePage(),
     const InboxPage(),
     const SavedPage(),
@@ -27,10 +23,10 @@ class MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = FirebaseAuth.instance.currentUser!;
+    final user = ref.watch(userProvider);
     final selectedIndex = ref.watch(bottomNavigationProvider);
     final provider = ref.watch(userServicesProvider);
-    provider.getCurrentUserDetails();
+    provider.getCurrentUserDetails(ref);
     return Scaffold(
       body: _widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -68,7 +64,7 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF404040)
               ),
               child: Center(
-                child: Text(user.email!.substring(0, 1), style: TextStyle(color: Colors.white),),
+                child: Text(user.name!.substring(0, 1), style: TextStyle(color: Colors.white),),
               ),
             ),
             activeIcon: Icon(Icons.circle, color: Color(0xFF111111)),

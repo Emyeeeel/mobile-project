@@ -8,85 +8,16 @@ import '../../providers/auth_providers.dart';
 import '../../providers/user_providers.dart';
 import '../../services/user_services.dart';
 
-class ExamplePage extends StatelessWidget {
-  ExamplePage({Key? key}) : super(key: key);
-
-  Map<String, dynamic> data = {};
-
-  CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
-
-  String randomUser = '2OQX9tksbrCYKDseNLef';
-  String currentUserID = FirebaseAuth.instance.currentUser!.uid;
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future: usersCollection.doc(randomUser).get(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          else if (snapshot.hasData && snapshot.data!.exists) {
-            data = snapshot.data!.data() as Map<String, dynamic>;
-            DateTime dateOfBirth = DateTime.parse(data['dateOfBirth']);
-            List<dynamic> selectedTopicsDynamic =
-                data['selectedTopics'] ?? [];
-            List<String> selectedTopics = selectedTopicsDynamic
-                .map((topic) => topic.toString())
-                .toList();
-            UserModel currentUser = UserModel(
-              email: data['email'],
-              password: data['password'],
-              name: data['name'],
-              dateOfBirth: dateOfBirth,
-              gender: data['gender'],
-              location: data['location'],
-              selectedTopics: selectedTopics,
-            );
-            return Center(
-              child: Column(
-                children: [
-                  Text('Current User UID: $currentUserID}'),
-                  Text('Name: ${currentUser.name}'),
-                  Text('Email: ${currentUser.email}'),
-                ],
-              ),
-            );
-          } else {
-            return const Center(child: Text('User data not found'));
-          }
-        }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-}
-
-
-class UserInfoPage extends ConsumerWidget {
-  const UserInfoPage({super.key});
+class ExamplePage extends ConsumerWidget {
+  const ExamplePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(userServicesProvider);
+    final user = ref.watch(userProvider);
+    final service = ref.watch(userServicesProvider);
     final auth = ref.watch(authServicesProvider);
-    return FutureBuilder<UserModel>(
-      future: provider.getCurrentUserDetails(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Loading state
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          // Error state
-          return Text('Error: ${snapshot.error}');
-        } else {
-          // Data loaded successfully
-          final currentUser = snapshot.data!;
-          return Center(
+    service.getCurrentUserDetails(ref);
+    return Center(
             child: Column(
                     children: [
                       const SizedBox(height: 20,),
@@ -109,13 +40,13 @@ class UserInfoPage extends ConsumerWidget {
                   ),
                   child: Center(
                     child: Text(
-                      '${currentUser.name!.substring(0, 1)}',
+                      user.name!.substring(0, 1),
                       style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600)
                       )
                     ),
                 ),
                 const SizedBox(height: 10,),
-                Text('${currentUser.name}', style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),),
+                Text('${user.name}', style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600),),
                 Row(
                   children: [
                     const Spacer(),
@@ -129,7 +60,7 @@ class UserInfoPage extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    Text('${currentUser.name}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+                    Text('${user.name}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
                     const Spacer(),
                   ],
                 ),
@@ -179,19 +110,16 @@ class UserInfoPage extends ConsumerWidget {
                   child: const Text('Sign out'),
                 ),
                 Center(
-                  child: Text('Current user UID: ${provider.currentUser.uid}'),
+                  child: Text('Current user UID: ${service.currentUser.uid}'),
                 ),
-                Text('Email: ${currentUser.email}'),
-                Text('Name: ${currentUser.name}'),
-                Text('Date of Birth: ${currentUser.dateOfBirth}'),
-                Text('Gender: ${currentUser.gender}'),
-                Text('Location: ${currentUser.location}'),
-                Text('Selected Topics: ${currentUser.selectedTopics}'),
+                Text('Email: ${user.email}'),
+                Text('Name: ${user.name}'),
+                Text('Date of Birth: ${user.dateOfBirth}'),
+                Text('Gender: ${user.gender}'),
+                Text('Location: ${user.location}'),
+                Text('Selected Topics: ${user.selectedTopics}'),
               ],
             ),
           );
-        }
-      },
-    );
   }
 }

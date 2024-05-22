@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/models/user_model.dart';
+import 'package:pinterest_clone/providers/user_providers.dart';
 
 class UserServices {
   List<String> userIdList = [];
@@ -28,7 +30,7 @@ class UserServices {
     return userInfoList;
   }
 
-  Future<UserModel> getCurrentUserDetails() async {
+    Future<void> getCurrentUserDetails(WidgetRef ref) async {
     await getDocID();
     await getAllUsersInfo();
     for (int i = 0; i < userInfoList.length; i++) {
@@ -42,7 +44,8 @@ class UserServices {
     DateTime dateOfBirth = DateTime.parse(currentUserData['dateOfBirth']);
     List<dynamic> selectedTopicsDynamic = currentUserData['selectedTopics'] ?? [];
     List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
-    UserModel userDetails = UserModel(
+    final user = ref.watch(userProvider.notifier);
+    user.state = UserModel(
       email: currentUserData['email'], 
       password: currentUserData['password'], 
       name: currentUserData['name'], 
@@ -51,7 +54,5 @@ class UserServices {
       location: currentUserData['location'], 
       selectedTopics: selectedTopics
     );
-    return userDetails;
   }
-
 }
