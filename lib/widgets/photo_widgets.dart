@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pinterest_clone/providers/ui_providers.dart';
 import 'package:pinterest_clone/widgets/main_page.dart';
 
-class PinImage extends StatelessWidget {
+class PinImage extends ConsumerWidget {
   const PinImage({super.key, required this.photoUrl});
 
   final String photoUrl;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       children: [
         Positioned(

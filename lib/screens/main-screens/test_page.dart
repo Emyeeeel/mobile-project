@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/user_model.dart';
 import '../../providers/auth_providers.dart';
 import '../../providers/user_providers.dart';
-import '../../services/user_services.dart';
 
 class ExamplePage extends ConsumerWidget {
   const ExamplePage({super.key});
