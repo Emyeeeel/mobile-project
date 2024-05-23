@@ -15,7 +15,7 @@ class MainPage extends ConsumerWidget {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-     DumpPage(),
+    const DumpPage(),
     const CreatePage(),
     const InboxPage(),
     SavedPage(),
@@ -23,7 +23,9 @@ class MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final service = ref.watch(pinterestServicesProvider);
+    service.getCurrentPinterestUserDetails(ref);
+    final user = ref.watch(pinterestUserProvider);
     final selectedIndex = ref.watch(bottomNavigationProvider);
     return Scaffold(
       body: _widgetOptions.elementAt(selectedIndex),
@@ -62,7 +64,7 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF404040)
               ),
               child: Center(
-                child: Text(user.name!.substring(0, 0), style: const TextStyle(color: Colors.white),),
+                child: Text(user.currentUser!.name!.substring(0, 1), style: const TextStyle(color: Colors.white),),
               ),
             ),
             activeIcon: Container(
@@ -73,7 +75,7 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF111111)
               ),
               child: Center(
-                child: Text(user.name!.substring(0, 0), style: const TextStyle(color: Colors.white),),
+                child: Text(user.currentUser!.name!.substring(0, 1), style: const TextStyle(color: Colors.white),),
               ),
             ),
             label: 'Saved',

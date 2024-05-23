@@ -18,40 +18,40 @@ class PinterestUserProvider extends StateNotifier<PinterestUser> {
     state = state.copyWith(profilePhotoURL: profilePhoto);
   }
 
-  void addContact(PinterestUser user) {
-    List<PinterestUser> updatedContacts = List.from(state.contacts ?? []);
-    updatedContacts.add(user);
+  void addContact(String contact) {
+    final List<String> updatedContacts = List.from(state.contacts ?? []);
+    updatedContacts.add(contact);
     state = state.copyWith(contacts: updatedContacts);
   }
 
-  void removeContact(PinterestUser user) {
-    List<PinterestUser> updatedContacts = List.from(state.contacts ?? []);
-    updatedContacts.remove(user);
+  void removeContact(String contact) {
+    final List<String> updatedContacts = List.from(state.contacts ?? []);
+    updatedContacts.remove(contact);
     state = state.copyWith(contacts: updatedContacts);
   }
 
-  void addFollowing(PinterestUser user) {
-    List<PinterestUser> updatedFollowing = List.from(state.following ?? []);
-    updatedFollowing.add(user);
-    state = state.copyWith(following: updatedFollowing);
-  }
-
-  void removeFollowing(PinterestUser user) {
-    List<PinterestUser> updatedFollowing = List.from(state.following ?? []);
-    updatedFollowing.remove(user);
-    state = state.copyWith(following: updatedFollowing);
-  }
-
-  void addFollower(PinterestUser user) {
-    List<PinterestUser> updatedFollowers = List.from(state.followers ?? []);
-    updatedFollowers.add(user);
+    void addFollower(String follower) {
+    final List<String> updatedFollowers = List.from(state.followers ?? []);
+    updatedFollowers.add(follower);
     state = state.copyWith(followers: updatedFollowers);
   }
 
-  void removeFollower(PinterestUser user) {
-    List<PinterestUser> updatedFollowers = List.from(state.followers ?? []);
-    updatedFollowers.remove(user);
+  void removeFollower(String follower) {
+    final List<String> updatedFollowers = List.from(state.followers ?? []);
+    updatedFollowers.remove(follower);
     state = state.copyWith(followers: updatedFollowers);
+  }
+
+  void addFollowing(String following) {
+    final List<String> updatedFollowing = List.from(state.following ?? []);
+    updatedFollowing.add(following);
+    state = state.copyWith(following: updatedFollowing);
+  }
+
+  void removeFollowing(String following) {
+    final List<String> removeFollowing = List.from(state.following ?? []);
+    removeFollowing.add(following);
+    state = state.copyWith(following: removeFollowing);
   }
 }
 
@@ -66,4 +66,4 @@ final pinterestUserProvider = StateNotifierProvider<PinterestUserProvider, Pinte
   ));
 });
 
-final pinterestServicesProvider = Provider((ref) => PinterestUserServices());
+final pinterestServicesProvider = Provider((ref) => PinterestServices());

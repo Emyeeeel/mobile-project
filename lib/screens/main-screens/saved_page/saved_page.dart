@@ -17,7 +17,6 @@ class SavedPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(pinterestUserProvider);
     final service = ref.watch(pinterestServicesProvider);
-    service.checkUser();
     service.getCurrentPinterestUserDetails(ref);
     return Center(
       child: Column(
@@ -187,6 +186,8 @@ class SavedPage extends ConsumerWidget {
     );
   }
 }
+
+
 
 class PinsPage extends StatelessWidget {
   const PinsPage({super.key});

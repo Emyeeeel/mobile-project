@@ -4,9 +4,9 @@ class PinterestUser {
   final UserModel? currentUser;
   final String? userName;
   final String? profilePhotoURL;
-  final List<PinterestUser>? contacts;
-  final List<PinterestUser>? following;
-  final List<PinterestUser>? followers;
+  final List<String>? contacts;
+  final List<String>? following;
+  final List<String>? followers;
 
   PinterestUser({
     required this.currentUser, 
@@ -21,9 +21,9 @@ class PinterestUser {
     UserModel? currentUser,
     String? userName,
     String? profilePhotoURL,
-    List<PinterestUser>? contacts,
-    List<PinterestUser>? following,
-    List<PinterestUser>? followers,
+    List<String>? contacts,
+    List<String>? following,
+    List<String>? followers,
   }) {
     return PinterestUser(
       currentUser: currentUser ?? this.currentUser,
