@@ -107,6 +107,7 @@ class AuthServices {
         'location': user.location,
         'selectedTopics': user.selectedTopics
       });
+
       createUser(context, ref);
       resetUserInfo(context, ref);
       showDialog(
@@ -127,5 +128,4 @@ class AuthServices {
     final user = ref.read(userProvider.notifier);
     user.resetUser();
   }
-
 }

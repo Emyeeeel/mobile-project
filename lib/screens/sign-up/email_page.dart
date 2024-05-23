@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/user_providers.dart';
 
 class EmailPage extends ConsumerWidget {
-  EmailPage({Key? key}) : super(key: key);
+  EmailPage({super.key});
 
   final textController = TextEditingController();
 

@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/providers/auth_providers.dart';
 import 'package:pinterest_clone/providers/pinterest_user_provider.dart';
 
 
-import '../../../providers/user_providers.dart';
 import 'settings_page.dart';
 
 // ignore: must_be_immutable
@@ -20,9 +16,9 @@ class SavedPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(pinterestUserProvider);
-    final service = ref.watch(userServicesProvider);
-    final auth = ref.watch(authServicesProvider);
-    service.getCurrentUserDetails(ref);
+    final service = ref.watch(pinterestServicesProvider);
+    service.checkUser();
+    service.getCurrentPinterestUserDetails(ref);
     return Center(
       child: Column(
         children: [
@@ -70,7 +66,7 @@ class SavedPage extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 10,),
-          Text('${user.currentUser!.name}', style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w600),),
+          Text(user.currentUser!.name!, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w600),),
           Row(
             children: [
               const Spacer(),
@@ -91,7 +87,7 @@ class SavedPage extends ConsumerWidget {
               ),
               const SizedBox(width: 2.5,),
               Text(
-                service.truncateEmail(user.userName!),
+                user.userName!,
                 style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const Spacer(),
@@ -100,7 +96,7 @@ class SavedPage extends ConsumerWidget {
           Row(
             children: [
               const Spacer(),
-              Text('${user.followers!.length.toString()} followers', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+              Text('${user.followers!.length.toString()} followers', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
               Padding(
                 padding: const EdgeInsets.fromLTRB(5,0,5,0),
                 child: Center(
@@ -114,7 +110,7 @@ class SavedPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              Text('${user.following!.length.toString()} following', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+              Text('${user.following!.length.toString()} following', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
               const Spacer(),
             ],
           ),
@@ -185,9 +181,24 @@ class SavedPage extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 20,),
+          isPinsClicked ? const PinsPage() : const BoardsPage()
+        ],
+      ),
+    );
+  }
+}
+
+class PinsPage extends StatelessWidget {
+  const PinsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
           Row(
             children: [
-              SizedBox(width: 20,),
+              const SizedBox(width: 20,),
               Container(
                 width: 270,
                 height: 50,
@@ -216,19 +227,68 @@ class SavedPage extends ConsumerWidget {
                   ),
                 ),
               ),
+              const SizedBox(width: 20,),
+              Transform.rotate(
+                angle: 90 * 3.1415926535897932 / 180,
+                child: const Icon(Icons.compare_arrows_rounded),
+              ),
+              const SizedBox(width: 20,),
               const Icon(Icons.add),
-              SizedBox(width: 20,),
+              const SizedBox(width: 20,),
             ],
           ),
-          // Center(
-          //   child: Text('Current user UID: ${service.currentUser.uid}'),
-          // ),
-          // Text('Email: ${user.currentUser!.email}'),
-          // Text('Name: ${user.currentUser!.name}'),
-          // Text('Date of Birth: ${user.currentUser!.dateOfBirth}'),
-          // Text('Gender: ${user.currentUser!.gender}'),
-          // Text('Location: ${user.currentUser!.location}'),
-          // Text('Selected Topics: ${user.currentUser!.selectedTopics}'),
+        ],
+      ),
+    );
+  }
+}
+
+class BoardsPage extends StatelessWidget {
+  const BoardsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const SizedBox(width: 20,),
+              Container(
+                width: 270,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(width: 2, color: Colors.black), 
+                ),
+                child: Center(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10,),
+                      const Icon(Icons.search),
+                      const SizedBox(width: 2.5,),
+                      Expanded(
+                        child: TextField(
+                          onChanged: (value) {
+                            
+                          },
+                          decoration: const InputDecoration(
+                            hintText: 'Search your saved ideas',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 20,),
+              const Icon(Icons.apps_rounded),
+              const SizedBox(width: 20,),
+              const Icon(Icons.add),
+              const SizedBox(width: 20,),
+            ],
+          ),
         ],
       ),
     );

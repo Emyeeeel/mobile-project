@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/pinterst_user_model.dart';
+import 'package:pinterest_clone/services/user_services.dart';
+import '../models/pinterest_user_model.dart';
 import '../models/user_model.dart';
 
 class PinterestUserProvider extends StateNotifier<PinterestUser> {
@@ -64,3 +65,5 @@ final pinterestUserProvider = StateNotifierProvider<PinterestUserProvider, Pinte
     following: [],
   ));
 });
+
+final pinterestServicesProvider = Provider((ref) => PinterestUserServices());
