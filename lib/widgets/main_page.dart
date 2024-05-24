@@ -15,9 +15,9 @@ class MainPage extends ConsumerWidget {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    const DumpPage(),
+    SearchPage(),
     const CreatePage(),
-    const InboxPage(),
+    InboxPage(),
     SavedPage(),
   ];
 

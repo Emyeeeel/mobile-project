@@ -55,6 +55,38 @@ class PinterestUserProvider extends StateNotifier<PinterestUser> {
   }
 }
 
+class UserListModel extends StateNotifier<List<UserModel>> {
+  UserListModel(List<UserModel> state) : super(state ?? []);
+
+  void addUser(UserModel user) {
+    state = [...state, user];
+  }
+
+  void removeUser(UserModel user) {
+    state = List.from(state)..remove(user);
+  }
+}
+
+class PinterestUserListModel extends StateNotifier<List<PinterestUser>> {
+  PinterestUserListModel(List<PinterestUser> state) : super(state ?? []);
+
+  void addPinterestUser(PinterestUser user) {
+    state = [...state, user];
+  }
+
+  void removePinterestUser(PinterestUser user) {
+    state = List.from(state)..remove(user);
+  }
+}
+
+final userListProvider = StateNotifierProvider<UserListModel, List<UserModel>>((ref) {
+  return UserListModel([]);
+});
+
+final pinterestUserListProvider = StateNotifierProvider<PinterestUserListModel, List<PinterestUser>>((ref) {
+  return PinterestUserListModel([]);
+});
+
 final pinterestUserProvider = StateNotifierProvider<PinterestUserProvider, PinterestUser>((ref) {
   return PinterestUserProvider(PinterestUser(
     currentUser: null,

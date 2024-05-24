@@ -111,8 +111,13 @@ class PinterestServices{
       following: followers, 
       followers: following
     );
+    userContactsUID = contacts;
+    getContactUsersDetails(ref);
   }
-  
+
+    List<String> userContactsUID = [];
+
+
     Future<void> sendUsersDataToPinterestTable(WidgetRef ref) async {
     DateTime dateOfBirth = DateTime.parse(userInfo['dateOfBirth']);
     List<dynamic> selectedTopicsDynamic = userInfo['selectedTopics'] ?? [];
@@ -146,58 +151,134 @@ class PinterestServices{
     }
     return email;
   }
+
+  List<UserModel> listOfUsersContacts = [];
+  List<PinterestUser> listOfPinterestUsersContacts = [];
   
+  List<UserModel> getContacts (List<String> usersUID) {
+    List<UserModel> userContacts = [];
+    for(int i = 0; i < userTableDocIds.length; i++){
+      for(int j = 0; j < usersUID.length; j++){
+        if(userTableDocIds[i] == usersUID[j]){
+          Map<String, dynamic> userInfoByDocID = usersTableInfoList[i];
+          DateTime dateOfBirth = DateTime.parse(userInfoByDocID['dateOfBirth']);
+          List<dynamic> selectedTopicsDynamic = userInfoByDocID['selectedTopics'] ?? [];
+          List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
 
-  // UserModel getUserInfoByDocID (String docID) {
-  //   int index = 0;
-  //   for(int i = 0; i < userTableDocIds.length; i++){
-  //     if(docID == userTableDocIds[i]){
+          UserModel user_model = UserModel(
+            email: userInfoByDocID['email'],
+            password: userInfoByDocID['password'],
+            name: userInfoByDocID['name'],
+            dateOfBirth: dateOfBirth,
+            gender: userInfoByDocID['gender'],
+            location: userInfoByDocID['location'],
+            selectedTopics: selectedTopics,
+          );
+          userContacts.add(user_model);
+        }
+      }
+    }
+    return userContacts;
+  }
 
-  //     }
-  //   }
-  //   Map<String, dynamic> userInfoByDocID = usersTableInfoList[index];
-  //   DateTime dateOfBirth = DateTime.parse(userInfoByDocID['dateOfBirth']);
-  //   List<dynamic> selectedTopicsDynamic = userInfoByDocID['selectedTopics'] ?? [];
-  //   List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
+  Future<void> getContactUsersDetails(WidgetRef ref) async {
+    // Clear existing contact lists
+    listOfUsersContacts.clear();
+    listOfPinterestUsersContacts.clear();
 
-  //   UserModel user_model = UserModel(
-  //     email: userInfoByDocID['email'],
-  //     password: userInfoByDocID['password'],
-  //     name: userInfoByDocID['name'],
-  //     dateOfBirth: dateOfBirth,
-  //     gender: userInfoByDocID['gender'],
-  //     location: userInfoByDocID['location'],
-  //     selectedTopics: selectedTopics,
-  //   );
-  //   return user_model;
-  // }
+    // Iterate through userTableDocIds and create UserModel and PinterestUser instances
+    for (int i = 0; i < userTableDocIds.length; i++) {
+      String userId = userTableDocIds[i];
+      if (userContactsUID.contains(userId)) {
+        // Get user information
+        Map<String, dynamic> userInfoByDocID = usersTableInfoList[i];
+        DateTime dateOfBirth = DateTime.parse(userInfoByDocID['dateOfBirth']);
+        List<dynamic> selectedTopicsDynamic = userInfoByDocID['selectedTopics'] ?? [];
+        List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
 
-  // List<UserModel> listOfUsersContacts = [];
+        // Create UserModel
+        UserModel user = UserModel(
+          email: userInfoByDocID['email'],
+          password: userInfoByDocID['password'],
+          name: userInfoByDocID['name'],
+          dateOfBirth: dateOfBirth,
+          gender: userInfoByDocID['gender'],
+          location: userInfoByDocID['location'],
+          selectedTopics: selectedTopics,
+        );
 
-  // List<UserModel> getContacts (List<String> usersUID) {
-  //   List<UserModel> userContacts = [];
-  //   for(int i = 0; i < userTableDocIds.length; i++){
-  //     for(int j = 0; j < usersUID.length; j++){
-  //       if(userTableDocIds[i] == usersUID[j]){
-  //         Map<String, dynamic> userInfoByDocID = usersTableInfoList[i];
-  //         DateTime dateOfBirth = DateTime.parse(userInfoByDocID['dateOfBirth']);
-  //         List<dynamic> selectedTopicsDynamic = userInfoByDocID['selectedTopics'] ?? [];
-  //         List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
+        // Add UserModel to listOfUsersContacts
+        listOfUsersContacts.add(user);
+      }
+    }
+    // Update providers with the new contact lists
+    ref.read(userListProvider.notifier).state = listOfUsersContacts;
 
-  //         UserModel user_model = UserModel(
-  //           email: userInfoByDocID['email'],
-  //           password: userInfoByDocID['password'],
-  //           name: userInfoByDocID['name'],
-  //           dateOfBirth: dateOfBirth,
-  //           gender: userInfoByDocID['gender'],
-  //           location: userInfoByDocID['location'],
-  //           selectedTopics: selectedTopics,
-  //         );
-  //         userContacts.add(user_model);
-  //       }
-  //     }
-  //   }
+  }
+}
 
-  //   return userContacts;
-  // }
+
+class TestModel {
+  final List<String> docIds;
+  final List<UserModel> users;
+
+  TestModel({required this.docIds, required this.users});
+}
+
+class TestServices {
+    Future<void> getAllDetails () async {
+    List<String> userCollectionDocIDS = [];
+    List<String> pinterestUserCollectionDocIDS = [];
+    
+    QuerySnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+    userCollectionDocIDS = userSnapshot.docs.map((doc) => doc.id).toList();
+
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('pinterest_users').get();
+    pinterestUserCollectionDocIDS = snapshot.docs.map((doc) => doc.id).toList();
+
+    List<Map<String, dynamic>> usersTable = [];
+    List<Map<String, dynamic>> pinterestUserTable = [];
+
+    for (String userId in userCollectionDocIDS) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      Map<String, dynamic> userData = snapshot.data()!;
+      usersTable.add(userData);
+    }
+
+    for (String userId in pinterestUserCollectionDocIDS) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('pinterest_users')
+          .doc(userId)
+          .get();
+      Map<String, dynamic> userData = snapshot.data()!;
+      pinterestUserTable.add(userData);
+    }
+
+    List<UserModel> userList = [];
+    List<PinterestUser> pinterestUserList = [];
+
+    for (var userData in usersTable) {
+      DateTime dateOfBirth = DateTime.parse(userData['dateOfBirth']);
+      List<dynamic> selectedTopicsDynamic = userData['selectedTopics'] ?? [];
+      List<String> selectedTopics = selectedTopicsDynamic.map((topic) => topic.toString()).toList();
+
+      userList.add(UserModel(
+        email: userData['email'],
+        password: userData['password'],
+        name: userData['name'],
+        dateOfBirth: dateOfBirth,
+        gender: userData['gender'],
+        location: userData['location'],
+        selectedTopics: selectedTopics,
+      ));
+    }
+
+    List<Map<String, dynamic>> matches = [];
+    //create a method that checks 
+  }
 }

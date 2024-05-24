@@ -1,92 +1,162 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/models/user_model.dart';
-import 'package:pinterest_clone/providers/user_providers.dart';
-import 'package:pinterest_clone/services/user_services.dart';
-
-import '../../providers/auth_providers.dart';
 import '../../providers/pinterest_user_provider.dart';
 
+// ignore: must_be_immutable
 class InboxPage extends ConsumerWidget {
-  const InboxPage({super.key});
-  
+  InboxPage({super.key});
+  bool isUpdatesSelected = false;
+  bool isMessagesSelected = true;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    final user = ref.watch(pinterestUserProvider);
+    final service = ref.watch(pinterestServicesProvider);
+   return Center(
+      child: Column(
+        children: [
+          const SizedBox(height: 50,),
+          Row(
+            children: [
+              const Spacer(),
+              GestureDetector(
+                onTap: (){
+                  isUpdatesSelected = true;
+                  isMessagesSelected = false;
+                },
+                child: Container(
+                  width: 130,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: isUpdatesSelected ? const Color(0xFF797979) : Colors.transparent
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Updates',
+                      style: TextStyle(
+                        color: isUpdatesSelected ? const Color(0xFFEFEFEF) : Colors.black
+                      ),
+                    ),
+                  ),
+                )
+              ),
+              const SizedBox(width: 30,),
+              GestureDetector(
+                onTap: (){
+                  isMessagesSelected = true;
+                  isUpdatesSelected = false;
+                },
+                child: Container(
+                  width: 130,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: isMessagesSelected ? const Color(0xFF797979) : Colors.transparent
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Messages',
+                      style: TextStyle(
+                        color: isMessagesSelected ? const Color(0xFFEFEFEF) : Colors.black
+                      ),
+                    ),
+                  ),
+                ) 
+              ),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 50,),
+          isMessagesSelected ? MessagesContainer() : Center(child: Text('Updates'),)
+        ],
+      ),
+    );
+  }
+}
+
+class MessagesContainer extends StatelessWidget {
+  const MessagesContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
-          Center(child: Text('data'))
+        Row(
+            children: [
+              const SizedBox(width: 30,),
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: const Color(0xFFE70125)
+                ),
+                child: SizedBox(child: Center(child: Image.asset('lib/assets/Compose.png', width: 25, height: 25,))),
+              ),
+              const SizedBox(width: 15,),
+              const Center(
+                child: Text('New Messages'),
+              ),
+            ],
+          ), 
+          const SizedBox(height: 20,),
+          const Row(
+            children: [
+              SizedBox(width: 30,),
+              Text('Messages'),
+            ],
+          ),
+          const SizedBox(height: 50,),
+          const Row(
+            children: [
+              SizedBox(width: 30,),
+              Text('Contacts'),
+            ],
+          ),
+          ContactsList(),
       ],
     );
   }
 }
 
-class DumpPage extends ConsumerWidget {
-  const DumpPage({super.key});
+class ContactsList extends ConsumerWidget {
+  const ContactsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
-    return Center(
-      child: FutureBuilder<void>(
-        future: ref.watch(pinterestServicesProvider).getCurrentPinterestUserDetails(ref),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            final service = ref.watch(pinterestServicesProvider);
-            final user = ref.read(pinterestUserProvider);
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('User index: ${service.userIndex.toString()}'),
-                  Text('Pinterest User index: ${service.pinterestUserIndex.toString()}'),
-                  Text('User docID: ${service.userTableDocIds[service.userIndex]}'),
-                  Text('Pinterest User profilePhoto: ${service.pinterestUserTableInfoList[service.pinterestUserIndex]['profilePhoto']}'),
-                  const SizedBox(height: 50,),
-                  Text('Pinterest User Name: ${user.currentUser!.name}'),
-                  Text('Pinterest User Username: ${user.userName}'),
-                  user.profilePhotoURL == null ? Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: const Color(0xFF404040)
-                    ),
-                    child: Center(
-                      child: Text(
-                        user.currentUser!.name!.substring(0, 1),
-                        style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w600)
-                      ),
-                    )
-                  ) : Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.network(
-                        user.profilePhotoURL!,
-                        fit: BoxFit.cover, 
-                      ),
-                    ),
+    final service = ref.watch(pinterestServicesProvider);
+    service.getCurrentPinterestUserDetails(ref);
+    return Container(
+      width: MediaQuery.of(context).size.width-50,
+      height: MediaQuery.of(context).size.height - 360,
+      decoration: BoxDecoration(
+        border: Border.all(width: 2)
+      ),
+      child: ListView.builder(
+        itemCount: service.userContactsUID.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.red
                   ),
-                  Text('Contacts: ${user.contacts!.length}'),
-                  Text('Followers: ${user.followers!.length}'),
-                  Text('Following: ${user.following!.length}'),
-                  Text('ProfilePhoto URL: ${user.profilePhotoURL}'),
-                ],
-              ),
-            );
-          }
-        },
+                  child: Center(
+                    child: Text('${service.userContactsUID.length}'),
+                  )
+                ),
+              Text('${service.listOfUsersContacts[index].name}'), 
+              Text('${service.listOfUsersContacts[index].email}'), 
+            ],
+          );
+        }
       ),
     );
   }
 }
+

@@ -30,3 +30,5 @@ flutter:
   assets:
     - lib/assets/pinterest_logo.png
     - lib/assets/logo_svg.svg
+    - lib/assets/Compose.svg
+    - lib/assets/Compose.png
