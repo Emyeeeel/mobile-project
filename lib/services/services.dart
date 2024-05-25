@@ -13,7 +13,7 @@ import '../screens/landing_page.dart';
 import '../widgets/main_page.dart';
 
 class BackendeServices {
-  void signUserIn(BuildContext context, String email, String password) async {
+  void signUserIn(BuildContext context, String email, String password, WidgetRef ref) async {
     showDialog(
       context: context, 
       builder: (context) {
@@ -25,6 +25,7 @@ class BackendeServices {
         email: email,
         password: password, 
       );
+      ref.watch(backendeServicesProvider).getUserModelDataByEmail(email, ref);
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
     } on FirebaseAuthException catch (e) {
@@ -87,8 +88,6 @@ class BackendeServices {
       'countryName': currentUser.countryName,
       'selectedTopics': currentUser.selectedTopics.map((topic) => topic).toList(), 
     };
-
-
 
     try {
       await FirebaseFirestore.instance.collection('pinterest_users').add(userDataMap);
@@ -164,7 +163,36 @@ class BackendeServices {
     }
   }
 
-  Future<void> getUserDataByEmail(String email, WidgetRef ref) async {
+  void setUserModel(WidgetRef ref) async {
+    final email = FirebaseAuth.instance.currentUser!.email!;
+    final currentUser = ref.watch(userModelNotifierProvider.notifier);
+
+   currentUser.setEmail(email);
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('pinterest_users')
+      .where('email', isEqualTo: currentUser.email)
+      .get();
+
+    if (!querySnapshot.docs.isEmpty) {
+
+      DocumentSnapshot userDoc = querySnapshot.docs.first;
+      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+      currentUser.setUid(userData['uid']);
+      currentUser.setPassword(userData['password']);
+      currentUser.setName(userData['name']);
+      currentUser.setGender(userData['gender']);
+      currentUser.setCountryName(userData['location']);
+
+      final userProfile = ref.watch(userProfileNotifierProvider.notifier);
+      userProfile.setUserId(currentUser.uid);
+      
+    } else {
+      print("No matching documents found.");
+    }
+  }
+
+  void getUserModelDataByEmail(String email, WidgetRef ref) async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
     .collection('pinterest_users')
     .where('email', isEqualTo: email)
@@ -185,11 +213,67 @@ class BackendeServices {
         countryName: docSnapshot['countryName'], 
         selectedTopics: selectedTopics
       );
+
+      final userProfile = ref.watch(userProfileNotifierProvider.notifier);
+      userProfile.setUserId(user.uid);
+
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('pinterest_users_profile')
+      .where('userId', isEqualTo: userProfile.userId)
+      .get();
+
+      if (!snapshot.docs.isEmpty){
+        DocumentSnapshot docSnapshot = snapshot.docs.first;
+        List<dynamic> contactsDynamic = docSnapshot['contacts'] ?? [];
+        List<String> contacts = contactsDynamic.map((topic) => topic.toString()).toList();
+
+        List<dynamic> followersDynamic = docSnapshot['followers'] ?? [];
+        List<String> followers = followersDynamic.map((topic) => topic.toString()).toList();
+
+        List<dynamic> followingDynamic = docSnapshot['following'] ?? [];
+        List<String> following = followingDynamic.map((topic) => topic.toString()).toList();
+
+        List<dynamic> boardsDynamic = docSnapshot['boards'] ?? [];
+        List<String> boards = boardsDynamic.map((topic) => topic.toString()).toList();
+
+        List<dynamic> pinsDynamic = docSnapshot['pins'] ?? [];
+        List<String> pins = pinsDynamic.map((topic) => topic.toString()).toList();
+
+        userProfile.state = UserProfile(
+          userId: user.uid, 
+          username: docSnapshot['username'], 
+          profilePhotoUrl: docSnapshot['profilePhotoUrl'], 
+          contacts: contacts, 
+          following: following, 
+          followers: followers, 
+          boards: boards, 
+          pins: pins
+        );
+
+      }
     } else {
       print("No matching documents found for email: $email");
     }
   }
 
+  void getUserProfileDetailsById(String documentId, WidgetRef ref) async {
+    try {
+      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+      .collection('pinterest_users_profile')
+      .doc(documentId)
+      .get();
+
+      if (docSnapshot.exists) {
+        Map<String, dynamic> userData = docSnapshot.data() as Map<String, dynamic>;
+        final userProfile = ref.watch(userProfileNotifierProvider.notifier);
+        userProfile.setUserId(userData['userId']);
+      } else {
+        print("Document with ID '$documentId' does not exist.");
+      }
+    } catch (e) {
+      print("Error fetching user profile details: $e");
+    }
+  }
 }
 
 

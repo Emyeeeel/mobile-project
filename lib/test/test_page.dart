@@ -226,7 +226,7 @@ class TestUser extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userProfile = ref.watch(userProfileNotifierProvider.notifier);
+    final userProfile = ref.read(userProfileNotifierProvider.notifier);
     final service = ref.watch(backendeServicesProvider);
     final user = ref.watch(userModelNotifierProvider);
     return Center(
@@ -265,10 +265,9 @@ class TestUser extends ConsumerWidget {
             ],
           ),
           Text('Logged in user: ${FirebaseAuth.instance.currentUser!.email!}'),
-          Text('Last created user uid: ${userProfile.userId}'),
           MaterialButton(
           onPressed: (){
-            service.getUserDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
+            service.getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
             showModalBottomSheet(
               context: context, 
               builder: ((context) => Column(

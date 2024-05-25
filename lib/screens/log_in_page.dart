@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/services/services.dart';
 
 import '../providers/auth_providers.dart';
 import '../providers/ui_providers.dart';
@@ -17,6 +18,7 @@ class LogInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isTapped = ref.watch(passwordVisibilityProvider);
     final authProvider = ref.watch(authServicesProvider);
+    final service = ref.watch(backendeServicesProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -130,7 +132,8 @@ class LogInPage extends ConsumerWidget {
               color: AppStyle.colorRed,
               text: 'Log in',
               onPressed: () {
-                authProvider.signUserIn(context, _emailController.text, _passwordController.text);
+                // authProvider.signUserIn(context, _emailController.text, _passwordController.text);
+                service.signUserIn(context, _emailController.text, _passwordController.text, ref);
               },
             ),
           ),

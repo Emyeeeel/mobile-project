@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/providers/providers.dart';
+import 'package:pinterest_clone/services/services.dart';
 import 'package:pinterest_clone/test/test_page.dart';
 //import 'package:flutter/widgets.dart';
 
@@ -18,12 +19,14 @@ class MainPage extends ConsumerWidget {
     Test(),
     const CreatePage(),
     TestUser(),
-    const SavedPage(),
+    SavedPage(),
   ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(bottomNavigationProvider);
+    final user = ref.watch(userModelNotifierProvider);
+    ref.watch(backendeServicesProvider).getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
     return Scaffold(
       body: _widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -61,7 +64,7 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF404040)
               ),
               child: Center(
-                child: Text(ref.read(userModelNotifierProvider).name.substring(0,1), style: const TextStyle(color: Colors.white),),
+                child: Text(user.name.substring(0,1), style: const TextStyle(color: Colors.white),),
               ),
             ),
             activeIcon: Container(
@@ -72,7 +75,7 @@ class MainPage extends ConsumerWidget {
                 color: const Color(0xFF111111)
               ),
               child: Center(
-                child: Text(ref.read(userModelNotifierProvider).name.substring(0,1), style: const TextStyle(color: Colors.white),),
+                child: Text(user.name.substring(0,1), style: const TextStyle(color: Colors.white),),
               ),
             ),
             label: 'Saved',
