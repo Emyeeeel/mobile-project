@@ -157,3 +157,22 @@ class UserProfile {
 }
 
 
+class ContactList {
+  final List<UserModel> userInfo;
+  final List<UserProfile> userProfile;
+
+  ContactList({
+    required this.userInfo, 
+    required this.userProfile
+  });
+
+  ContactList copyWith({
+    List<UserModel>? userInfo,
+    List<UserProfile>? userProfile,
+  }) {
+    return ContactList(
+      userInfo: userInfo?? this.userInfo,
+      userProfile: userProfile?? this.userProfile,
+    );
+  }
+}

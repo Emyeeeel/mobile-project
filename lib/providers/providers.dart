@@ -321,3 +321,50 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
 }
 
 final userProfileNotifierProvider  = StateNotifierProvider<UserProfileNotifier, UserProfile>((ref) => UserProfileNotifier());
+
+
+class ContactListNotifier extends StateNotifier<ContactList> {
+  ContactListNotifier() : super(ContactList(userInfo: [], userProfile: []));
+
+  // Getter for userInfo
+  List<UserModel> get userInfo => state.userInfo;
+
+  // Getter for userProfile
+  List<UserProfile> get userProfile => state.userProfile;
+
+  // Setter for userInfo
+  void setUserInfo(List<UserModel> userInfo) {
+    state = state.copyWith(userInfo: userInfo);
+  }
+
+  // Setter for userProfile
+  void setUserProfile(List<UserProfile> userProfile) {
+    state = state.copyWith(userProfile: userProfile);
+  }
+
+  void addUserInfo(UserModel userModel) {
+    state = state.copyWith(userInfo: [...state.userInfo, userModel]);
+  }
+
+  // Method to remove a UserModel from userInfo
+  void removeUserInfo(UserModel userModelToRemove) {
+    state = state.copyWith(userInfo: state.userInfo.where((userModel) => userModel!= userModelToRemove).toList());
+  }
+
+  // Method to add a UserProfile to userProfile
+  void addUserProfile(UserProfile userProfile) {
+    state = state.copyWith(userProfile: [...state.userProfile, userProfile]);
+  }
+
+  // Method to remove a UserProfile from userProfile
+  void removeUserProfile(UserProfile userProfileToRemove) {
+    state = state.copyWith(userProfile: state.userProfile.where((userProfile) => userProfile!= userProfileToRemove).toList());
+  }
+}
+
+final contactListProvider = StateNotifierProvider<ContactListNotifier, ContactList>((ref) => ContactListNotifier());
+
+
+
+
+
