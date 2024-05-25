@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../providers/user_providers.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 
 class EmailPage extends ConsumerWidget {
-  EmailPage({Key? key}) : super(key: key);
+  EmailPage({super.key});
 
   final textController = TextEditingController();
 
@@ -24,7 +23,7 @@ class EmailPage extends ConsumerWidget {
           child: CupertinoTextField(
             controller: textController,
             onChanged: (value){
-              ref.read(userProvider.notifier).setEmail(value.trim());
+              ref.read(userModelNotifierProvider.notifier).setEmail(value.trim());
             },
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             placeholder: 'Enter your email address',

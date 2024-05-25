@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../providers/user_providers.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 
 class GenderPage extends ConsumerStatefulWidget {
   const GenderPage({super.key});
@@ -21,7 +20,6 @@ class _GenderPageState extends ConsumerState<GenderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -46,7 +44,7 @@ class _GenderPageState extends ConsumerState<GenderPage> {
             setState(() {
               selectedGender = buttonText[0];
             });
-            ref.read(userProvider.notifier).setGender(buttonText[0].trim());
+            ref.read(userModelNotifierProvider.notifier).setGender(buttonText[0].trim());
           },
         ),
         const SizedBox(height: 10,),
@@ -57,7 +55,7 @@ class _GenderPageState extends ConsumerState<GenderPage> {
             setState(() {
               selectedGender = buttonText[1];
             });
-            ref.read(userProvider.notifier).setGender(buttonText[1].trim());
+            ref.read(userModelNotifierProvider.notifier).setGender(buttonText[1].trim());
           },
         ),
         const SizedBox(height: 10,),
@@ -68,7 +66,7 @@ class _GenderPageState extends ConsumerState<GenderPage> {
             setState(() {
               selectedGender = buttonText[2];
             });
-            ref.read(userProvider.notifier).setGender(buttonText[2].trim());
+            ref.read(userModelNotifierProvider.notifier).setGender(buttonText[2].trim());
           },
         ),
       ],

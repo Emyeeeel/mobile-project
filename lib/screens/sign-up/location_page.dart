@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 
 import '../../models/country_state.dart' as cs_model;
-import '../../providers/user_providers.dart';
 import '../../services/api_services.dart';
 
 
@@ -93,7 +93,7 @@ class _LocationsPageState extends ConsumerState<LocationsPage> {
                                 setState(() {
                                   selectedCountry = selectedValue!;
                                 });
-                                ref.read(userProvider.notifier).setLocation(selectedCountry.trim());
+                                ref.read(userModelNotifierProvider.notifier).setCountryName(selectedCountry.trim());
                               },
                             ),
                           ),

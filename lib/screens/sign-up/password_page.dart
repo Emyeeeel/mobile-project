@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 
 import '../../providers/ui_providers.dart';
-import '../../providers/user_providers.dart';
 
 class PasswordPage extends ConsumerWidget {
   PasswordPage({super.key});
 
-  final TextEditingController passwordController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,8 +34,9 @@ class PasswordPage extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: passwordController,
                       onChanged: (value) {
-                        ref.read(userProvider.notifier).setPassword(value.trim());
+                        ref.read(userModelNotifierProvider.notifier).setPassword(value.trim());
                       },
                       obscureText: !isTapped,
                       decoration: const InputDecoration(

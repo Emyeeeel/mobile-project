@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/api_providers.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 import '../../providers/user_providers.dart';
 
 final List<String> topics = [
@@ -24,8 +26,6 @@ class InterestedInPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userNotifier = ref.watch(userProvider.notifier);
-    final userState = ref.watch(userProvider);
     final topicPhotos = ref.watch(topicPhotosProvider(topics));
 
     return Column(
@@ -48,40 +48,43 @@ class InterestedInPage extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stackTrace) => Center(child: Text('Error: $error')),
             data: (photos) {
-              return MasonryGridView.builder(
-                gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
                 itemCount: photos.length,
                 itemBuilder: (context, index) {
                   final photo = photos[index];
                   String topic = topics[index];
-                  bool isSelected = userState.selectedTopics.contains(topic);
+                  bool isSelected = ref.watch(userModelNotifierProvider).selectedTopics.contains(topic);
                   return GestureDetector(
                     onTap: () {
                       if (isSelected) {
-                        userNotifier.removeTopic(topic);
+                        ref.watch(userModelNotifierProvider.notifier).removeTopic(topic);
                       } else {
-                        userNotifier.addTopic(topic);
+                        ref.watch(userModelNotifierProvider.notifier).addTopic(topic);
                       }
                     },
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: isSelected ? Colors.red : Colors.grey.shade300, width: 2),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
                       child: Stack(
                         children: [
-                          Image.network(
-                            photo.photoUrl,
-                            fit: BoxFit.cover,
+                          Container(
+                            
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: isSelected ? Colors.red : Colors.grey.shade300, width: 2),
+                            borderRadius: BorderRadius.circular(25),
                           ),
-                          Center(
-                            child: Text(
-                              topic,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white),
+                          child: ClipRRect(
+                            child: Image.network(
+                              photo.photoUrl,
+                              fit: BoxFit.cover,
                             ),
+                          ),),
+                          Positioned(
+                            bottom: -15,
+                            child: Text(topic,),
                           ),
                         ],
                       ),
