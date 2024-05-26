@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/providers/providers.dart';
+import 'package:pinterest_clone/services/services.dart';
 
-import '../../services/services.dart';
 
 class InboxPage extends StatelessWidget {
   InboxPage({super.key});
@@ -115,7 +114,7 @@ class MessagesContainer extends StatelessWidget {
               Text('Contacts'),
             ],
           ),
-          ContactsList(),
+          const ContactsList(),
       ],
     );
   }
@@ -126,70 +125,61 @@ class ContactsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(backendeServicesProvider).getUserInfo(ref);
     final userProfile = ref.read(userProfileNotifierProvider);
-    return Container(
-      width: MediaQuery.of(context).size.width-50,
-      height: MediaQuery.of(context).size.height - 360,
-      decoration: BoxDecoration(
-        border: Border.all(width: 2)
-      ),
-      child: ListView.builder(
-        itemCount: userProfile.contacts.length,
-        itemBuilder: (context, index) {
-          final contactUser = ref.read(contactListProvider);
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            contactUser.userProfile[index].profilePhotoUrl,
-                            fit: BoxFit.cover, 
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 15,),
-               Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, 
+    return FutureBuilder<void>(
+      future: ref.watch(backendeServicesProvider).setContactsList(ref),
+      builder: (context, snapshot) {
+        return Container(
+          width: MediaQuery.of(context).size.width-50,
+          height: MediaQuery.of(context).size.height - 360,
+          decoration: BoxDecoration(
+            border: Border.all(width: 2)
+          ),
+          child: ListView.builder(
+            itemCount: userProfile.contacts.length,
+            itemBuilder: (context, index) {
+              final contactUser = ref.read(contactListProvider);
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
                   children: [
-                    Text(contactUser.userInfo[index].name),
-                    Text('Say Hello'),
+                    Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
+                                contactUser.userProfile[index].profilePhotoUrl,
+                                fit: BoxFit.cover, 
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15,),
+                   Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, 
+                      children: [
+                        Text(contactUser.userInfo[index].name),
+                        const Text('Say Hello'),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.arrow_forward_ios_rounded),
                   ],
                 ),
-              ),
-              const Spacer(),
-              const Icon(Icons.arrow_forward_ios_rounded),
-              ],
-            ),
-          );
-        }
-      ),
+              );
+            }
+          ),
+        );
+      }
     );
   }
 }
 
 
-
-// Define a StateNotifier to manage the selection state
-final inboxSelectionControllerProvider = StateNotifierProvider<InboxSelectionController, String>((ref) => InboxSelectionController());
-
-class InboxSelectionController extends StateNotifier<String> {
-  InboxSelectionController() : super('messages'); // Default to 'messages'
-
-  void selectUpdate() {
-    state = 'updates';
-  }
-
-  void selectMessage() {
-    state = 'messages';
-  }
-}
