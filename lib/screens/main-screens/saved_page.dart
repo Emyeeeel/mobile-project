@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/services/services.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/main_page.dart';
 
@@ -15,7 +19,7 @@ class SavedPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.read(userModelNotifierProvider);
     final userProfile = ref.read(userProfileNotifierProvider);
-    return Center(
+    return SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(height: 50,),
@@ -272,60 +276,108 @@ class RowWidget extends StatelessWidget {
 }
 
 
-class PinsPage extends StatelessWidget {
+class PinsPage extends ConsumerWidget {
   const PinsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const SizedBox(width: 20,),
-              Container(
-                width: 270,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(width: 2, color: Colors.black), 
-                ),
-                child: Center(
-                  child: Row(
+  Widget build(BuildContext context, WidgetRef ref) {
+return FutureBuilder<void>(
+  future: ref.read(backendeServicesProvider).getSavedList(ref),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); 
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }else{
+          return SizedBox(
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      const SizedBox(width: 10,),
-                      const Icon(Icons.search),
-                      const SizedBox(width: 2.5,),
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
-                            
-                          },
-                          decoration: const InputDecoration(
-                            hintText: 'Search your saved ideas',
-                            border: InputBorder.none,
+                      const SizedBox(width: 20,),
+                      Container(
+                        width: 270,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(width: 2, color: Colors.black), 
+                        ),
+                        child: Center(
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 10,),
+                              const Icon(Icons.search),
+                              const SizedBox(width: 2.5,),
+                              Expanded(
+                                child: TextField(
+                                  onChanged: (value) {},
+                                  decoration: const InputDecoration(
+                                    hintText: 'Search your saved ideas',
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                      const SizedBox(width: 20,),
+                      Container(
+                        width: 24, 
+                        height: 24, 
+                        child: Transform.rotate(
+                          angle: 90 * 3.1415926535897932 / 180,
+                          child: const Icon(Icons.compare_arrows_rounded),
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                      const Icon(Icons.add),
+                      const SizedBox(width: 20,),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20,),
+                      SizedBox(
+                          height: 300,
+                          width: MediaQuery.of(context).size.width-40,
+                        child: Expanded(
+                          child: SizedBox(
+                            child: MasonryGridView.builder(
+                              gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,),
+                              itemCount: ref.read(backendeServicesProvider).urls.length, 
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: SizedBox(
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
+                                        child: Image.network(
+                                          ref.read(backendeServicesProvider).urls[index],
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },         
+                            )
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                    ],
+                  )
+                ],
               ),
-              const SizedBox(width: 20,),
-              Transform.rotate(
-                angle: 90 * 3.1415926535897932 / 180,
-                child: const Icon(Icons.compare_arrows_rounded),
-              ),
-              const SizedBox(width: 20,),
-              const Icon(Icons.add),
-              const SizedBox(width: 20,),
-            ],
-          ),
-        ],
-      ),
-    );
+            );
+        }
+  }
+);
   }
 }
+
+
 
 class BoardsPage extends StatelessWidget {
   const BoardsPage({super.key});
@@ -373,6 +425,7 @@ class BoardsPage extends StatelessWidget {
               const SizedBox(width: 20,),
             ],
           ),
+          const SizedBox(height: 20,),
         ],
       ),
     );

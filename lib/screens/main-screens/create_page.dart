@@ -37,7 +37,7 @@ class CreatePage extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photoUrl: photo.photoUrl,)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photo: photo,)));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),

@@ -5,6 +5,7 @@ import 'package:pinterest_clone/providers/providers.dart';
 
 import '../providers/api_providers.dart';
 import '../screens/sign-up/interested_in_page.dart';
+import '../widgets/photo_widgets.dart';
 
 class TestPage extends ConsumerWidget {
   TestPage({super.key});
@@ -40,39 +41,40 @@ class TestPage extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              showModalBottomSheet(
-                                context: context, 
-                                builder: ((context) => SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 500,
-                                  child: Column(
-                                    children: [
-                                      Text(photo.id),
-                                      Text(photo.photoUrl),
-                                      Text(photo.description),
-                                      Text(photo.photographerUsername),
-                                      TextField(
-                                        controller: title,
-                                        onChanged: (value) {
-                                          pin.setTitle(value);
-                                        },
-                                        decoration: const InputDecoration(
-                                          hintText: 'Title',
-                                        ),
-                                      ),
-                                      TextField(
-                                        controller: description,
-                                        onChanged: (value) {
-                                          pin.setDescription(value);
-                                        },
-                                        decoration: const InputDecoration(
-                                          hintText: 'Description',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photo: photo,)));
+                              // showModalBottomSheet(
+                              //   context: context, 
+                              //   builder: ((context) => SizedBox(
+                              //     width: MediaQuery.of(context).size.width,
+                              //     height: 500,
+                              //     child: Column(
+                              //       children: [
+                              //         Text(photo.id),
+                              //         Text(photo.photoUrl),
+                              //         Text(photo.description),
+                              //         Text(photo.photographerUsername),
+                              //         TextField(
+                              //           controller: title,
+                              //           onChanged: (value) {
+                              //             pin.setTitle(value);
+                              //           },
+                              //           decoration: const InputDecoration(
+                              //             hintText: 'Title',
+                              //           ),
+                              //         ),
+                              //         TextField(
+                              //           controller: description,
+                              //           onChanged: (value) {
+                              //             pin.setDescription(value);
+                              //           },
+                              //           decoration: const InputDecoration(
+                              //             hintText: 'Description',
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   )
+                              // ));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),

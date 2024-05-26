@@ -303,9 +303,66 @@ class BackendeServices {
     }
   }
   
+  void sendPinData (WidgetRef ref) async {
+    Pin currentUser = ref.read(pinNotifierProvider.notifier).state;
+
+    Map<String, dynamic> userDataMap = {
+      'documentId': currentUser.documentId,
+      'url': currentUser.url,
+      'userId': currentUser.userId, 
+      'description': currentUser.description,
+      'createdBy': currentUser.createdBy,
+      'createdAt': currentUser.createdAt.toIso8601String(), 
+    };
+
+    try {
+      await FirebaseFirestore.instance.collection('pinterest_users_pins').add(userDataMap);
+      print("User saved successfully");
+
+    } catch (e) {
+      print("Error saving user: $e");
+    }
+  }
+
+  void updatePinUIDAndSave(WidgetRef ref) async {
+    final userId = ref.read(userModelNotifierProvider.notifier).uid;
+
+    List<String> docId = [];
+    
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    .collection('pinterest_users_pins')
+    .where('userId', isEqualTo: userId)
+    .get();
+
+    for (var doc in querySnapshot.docs) {
+      docId.add(doc.id);
+    }
+
+    ref.read(userProfileNotifierProvider.notifier).setPins(docId);
+
+    for (String id in docId) {
+      await FirebaseFirestore.instance.collection('pinterest_users_pins').doc(id).update({
+        'documentId': id,
+      });
+    }
+  }
+  
+  List<String> urls = [];
+  Future<void> getSavedList (WidgetRef ref) async {
+    urls.clear();
+   final userId = ref.read(userModelNotifierProvider.notifier).uid;
+    
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    .collection('pinterest_users_pins')
+    .where('userId', isEqualTo: userId)
+    .get();
+
+    for (var doc in querySnapshot.docs) {
+      String url = doc['url']; 
+      urls.add(url);
+    }
+  }
 }
 
 
 final backendeServicesProvider = Provider<BackendeServices>((ref) => BackendeServices());
-
-

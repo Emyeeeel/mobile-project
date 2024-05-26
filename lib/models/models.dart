@@ -45,7 +45,7 @@ class UserModel {
 class Pin {
   final String documentId; 
   final String url;
-  final String title;
+  final String userId;
   final String description;
   final String createdBy;
   final DateTime createdAt;
@@ -53,7 +53,7 @@ class Pin {
   Pin({
     required this.documentId, 
     required this.url,
-    required this.title,
+    required this.userId,
     required this.description,
     required this.createdBy,
     required this.createdAt,
@@ -62,7 +62,7 @@ class Pin {
   Pin copyWith({
     String? documentId,
     String? url,
-    String? title,
+    String? userId,
     String? description,
     String? createdBy,
     DateTime? createdAt,
@@ -70,7 +70,7 @@ class Pin {
     return Pin(
       documentId: documentId?? this.documentId,
       url: url?? this.url,
-      title: title?? this.title,
+      userId: userId?? this.userId,
       description: description?? this.description,
       createdBy: createdBy?? this.createdBy,
       createdAt: createdAt?? this.createdAt,
@@ -173,6 +173,19 @@ class ContactList {
     return ContactList(
       userInfo: userInfo?? this.userInfo,
       userProfile: userProfile?? this.userProfile,
+    );
+  }
+}
+
+class UserSavedPins{
+  final List<Pin> pinImages;
+
+  UserSavedPins({required this.pinImages});
+  UserSavedPins copyWith({
+    List<Pin>? pinImages,
+  }) {
+    return UserSavedPins(
+      pinImages: pinImages?? this.pinImages,
     );
   }
 }

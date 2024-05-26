@@ -112,7 +112,7 @@ class PinNotifier extends StateNotifier<Pin> {
   PinNotifier() : super(Pin(
       documentId: '', 
       url: '',
-      title: '',
+      userId: '',
       description: '',
       createdAt: DateTime.now(),
       createdBy: '',
@@ -127,8 +127,8 @@ class PinNotifier extends StateNotifier<Pin> {
     state = state.copyWith(url: url);
   }
 
-  void setTitle(String title) {
-    state = state.copyWith(title: title);
+  void setuserId(String userId) {
+    state = state.copyWith(userId: userId);
   }
 
   void setDescription(String description) {
@@ -147,7 +147,7 @@ class PinNotifier extends StateNotifier<Pin> {
   // Getter for each field
   String get documentId => state.documentId;
   String get url => state.url;
-  String get title => state.title;
+  String get userId => state.userId;
   String get description => state.description;
   String get createdBy => state.createdBy;
   // DateTime get createdAt => state.createdAt; // Use with caution due to immutability concerns
@@ -318,6 +318,26 @@ class UserProfileNotifier extends StateNotifier<UserProfile> {
     currentPins.remove(pin);
     state = state.copyWith(pins: currentPins);
   }
+
+  void setContacts(List<String> newContacts) {
+    state = state.copyWith(contacts: newContacts);
+  }
+
+  void setFollowing(List<String> newFollowing) {
+    state = state.copyWith(following: newFollowing);
+  }
+
+  void setFollowers(List<String> newFollowers) {
+    state = state.copyWith(followers: newFollowers);
+  }
+
+  void setBoards(List<String> newBoards) {
+    state = state.copyWith(boards: newBoards);
+  }
+
+  void setPins(List<String> newPins) {
+    state = state.copyWith(pins: newPins);
+  }
 }
 
 final userProfileNotifierProvider  = StateNotifierProvider<UserProfileNotifier, UserProfile>((ref) => UserProfileNotifier());
@@ -364,9 +384,32 @@ class ContactListNotifier extends StateNotifier<ContactList> {
 
 final contactListProvider = StateNotifierProvider<ContactListNotifier, ContactList>((ref) => ContactListNotifier());
 
+class UserSavedPinsNotifier extends StateNotifier<UserSavedPins> {
+  UserSavedPinsNotifier() : super(UserSavedPins(pinImages: []));
 
+  // Getter to access the current state
+  UserSavedPins get state => this.state;
 
+  // Setter to update the state
+  set state(UserSavedPins newState) {
+    if (newState!= this.state) {
+      this.state = newState;
+    }
+  }
 
+  // Method to add a new pin
+  void addPin(Pin newPin) {
+    state = state.copyWith(pinImages: List.from(state.pinImages)..add(newPin));
+  }
 
+  // Method to remove a pin by index
+  void removePin(int index) {
+    if (index >= 0 && index < state.pinImages.length) {
+      state = state.copyWith(pinImages: List.from(state.pinImages)..removeAt(index));
+    }
+  }
+}
+
+final userSavedPinsProvider = StateNotifierProvider<UserSavedPinsNotifier, UserSavedPins>((ref)=> UserSavedPinsNotifier());
 
 
