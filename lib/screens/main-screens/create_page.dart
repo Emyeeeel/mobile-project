@@ -11,7 +11,7 @@ class CreatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final unsplashPhotosAsyncValue = ref.watch(homePagePhotosProvider);
+    final unsplashPhotosAsyncValue = ref.read(homePagePhotosProvider);
 
     return Column(
       children: [

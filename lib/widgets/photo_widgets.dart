@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinterest_clone/widgets/main_page.dart';
 
@@ -68,9 +67,9 @@ class PinImage extends StatelessWidget {
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.red
+                    borderRadius: BorderRadius.circular(100)
                   ),
+                  child: SizedBox(child: Center(child: Image.asset('lib/assets/Heart.png', width: 25, height: 25,))),
                 ),
                 const Spacer(),
                 const ViewButton(),
@@ -82,8 +81,8 @@ class PinImage extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: Colors.red
                   ),
+                  child: SizedBox(child: Center(child: Image.asset('lib/assets/Upload.png', width: 25, height: 25,))),
                 ),
                 const SizedBox(width: 20,),
               ],

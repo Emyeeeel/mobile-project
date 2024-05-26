@@ -126,9 +126,7 @@ class ContactsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(backendeServicesProvider).getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
-    final userProfile = ref.watch(userProfileNotifierProvider);
-    ref.watch(backendeServicesProvider).setContactsList(ref);
+    final userProfile = ref.read(userProfileNotifierProvider);
     return Container(
       width: MediaQuery.of(context).size.width-50,
       height: MediaQuery.of(context).size.height - 360,
@@ -138,7 +136,7 @@ class ContactsList extends ConsumerWidget {
       child: ListView.builder(
         itemCount: userProfile.contacts.length,
         itemBuilder: (context, index) {
-          final contactUser = ref.watch(contactListProvider);
+          final contactUser = ref.read(contactListProvider);
           return Padding(
             padding: const EdgeInsets.all(10),
             child: Row(

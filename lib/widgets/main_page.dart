@@ -18,7 +18,7 @@ class MainPage extends ConsumerWidget {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    SearchPage(),
+    TestPage(),
     const CreatePage(),
     InboxPage(),
     SavedPage(),
@@ -28,7 +28,6 @@ class MainPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(bottomNavigationProvider);
     final user = ref.watch(userModelNotifierProvider);
-    ref.watch(backendeServicesProvider).getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
     return Scaffold(
       body: _widgetOptions.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

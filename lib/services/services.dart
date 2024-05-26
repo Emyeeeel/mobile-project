@@ -25,7 +25,8 @@ class BackendeServices {
         email: email,
         password: password, 
       );
-      ref.watch(backendeServicesProvider).getUserModelDataByEmail(email, ref);
+      await getUserInfo(ref);
+      await setContactsList(ref);
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
     } on FirebaseAuthException catch (e) {
@@ -163,7 +164,8 @@ class BackendeServices {
     }
   }
 
-  void getUserModelDataByEmail(String email, WidgetRef ref) async {
+  Future<void> getUserInfo (WidgetRef ref) async {
+    String email = FirebaseAuth.instance.currentUser!.email!;
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
     .collection('pinterest_users')
     .where('email', isEqualTo: email)
@@ -227,7 +229,7 @@ class BackendeServices {
     }
   }
 
-  void setContacts(String documentId, WidgetRef ref) async {
+  Future<void> setContacts(String documentId, WidgetRef ref) async {
     final contactsList = ref.watch(contactListProvider.notifier);
     try {
       DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
@@ -294,11 +296,10 @@ class BackendeServices {
     }
   }
 
-  void setContactsList(WidgetRef ref) async{
-    ref.watch(backendeServicesProvider).getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
+  Future<void> setContactsList(WidgetRef ref) async{
     final userContacts = ref.watch(userProfileNotifierProvider.notifier);
     for(int i = 0; i < userContacts.contacts.length; i++){
-      setContacts(userContacts.contacts[i], ref);
+      await setContacts(userContacts.contacts[i], ref);
     }
   }
 }

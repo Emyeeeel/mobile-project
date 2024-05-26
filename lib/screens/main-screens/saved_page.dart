@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pinterest_clone/providers/auth_providers.dart';
 import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/services/services.dart';
 
@@ -15,10 +13,8 @@ class SavedPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.watch(authServicesProvider);
-    final user = ref.watch(userModelNotifierProvider);
-    final userProfile = ref.watch(userProfileNotifierProvider);
-    ref.watch(backendeServicesProvider).getUserModelDataByEmail(FirebaseAuth.instance.currentUser!.email!, ref);
+    final user = ref.read(userModelNotifierProvider);
+    final userProfile = ref.read(userProfileNotifierProvider);
     return Center(
       child: Column(
         children: [
