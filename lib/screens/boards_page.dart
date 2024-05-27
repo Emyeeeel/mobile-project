@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/styles.dart';
 import 'package:provider/provider.dart';
 
+import '../services/services.dart';
 import '../widgets/main_page.dart';
 
 class CreateBoardPage extends ConsumerWidget {
@@ -28,7 +30,88 @@ class CreateBoardPage extends ConsumerWidget {
             const Spacer(),
             GestureDetector(
               onTap: (){
-
+                showModalBottomSheet(
+                  context: context, 
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(35))),
+                  builder: (context) => Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .70,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
+                      color: Color(0xFF1E1E1E),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20,),
+                        const Row(
+                          children: [
+                            SizedBox(width: 20,),
+                            Spacer(),
+                            Text('Select Photos', style: AppStyle.detailsTitlePin,),
+                            Spacer(),
+                            SizedBox(width: 20,),
+                          ],
+                        ),
+                        const SizedBox(height: 50,),
+                          SizedBox(
+                            height: 300,
+                            width: MediaQuery.of(context).size.width-40,
+                          child: Expanded(
+                            child: SizedBox(
+                              child: GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4,),
+                                itemCount: ref.read(backendeServicesProvider).urls.length, 
+                                itemBuilder: (BuildContext context, int index) {
+                                  bool isSelected = ref.read(boardNotifierProvider).pinIds.contains(ref.read(backendeServicesProvider).urls[index]);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      ref.watch(boardNotifierProvider.notifier).addPinId(ref.read(backendeServicesProvider).urls[index].trim());
+                                      if (isSelected) {
+                                        ref.watch(boardNotifierProvider.notifier).removePinId(ref.read(backendeServicesProvider).urls[index].trim());
+                                      } else {
+                                        ref.watch(boardNotifierProvider.notifier).addPinId(ref.read(backendeServicesProvider).urls[index].trim());
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: Container(
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: isSelected ? Colors.grey.shade300 : Colors.transparent, width: 2),
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(15),
+                                            child: Image.network(
+                                              ref.read(backendeServicesProvider).urls[index],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },         
+                              )
+                            ),
+                          ),
+                        ),
+                        MaterialButton(
+                          onPressed: (){
+                            ref.read(backendeServicesProvider).getBoard(ref);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
+                          },
+                          minWidth: 80,
+                          height: 55,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          color: const Color(0xFF404040),
+                          child: const Text('Create', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Color(0xFFA3A3A3)),),
+                        ),
+                      ],
+                    ),
+                  )
+                );
               },
               child: Container(
                 width: 80,
@@ -124,4 +207,5 @@ class CreateBoardPage extends ConsumerWidget {
     );
   }
 }
+
 

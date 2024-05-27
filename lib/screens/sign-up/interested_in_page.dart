@@ -70,7 +70,6 @@ class InterestedInPage extends ConsumerWidget {
                       child: Stack(
                         children: [
                           Container(
-                            
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
                             border: Border.all(color: isSelected ? Colors.red : Colors.grey.shade300, width: 2),

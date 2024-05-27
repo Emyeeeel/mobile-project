@@ -365,6 +365,16 @@ class BackendeServices {
     urls = links;
     ref.read(userProfileNotifierProvider.notifier).setPins(urls);
   }
+
+  List<String> boardUrls = [];
+  Future<void> getBoard (WidgetRef ref) async {
+    boardUrls.clear();
+    List<String> links = [];
+    for(int i = 0; i < ref.read(boardNotifierProvider).pinIds.length; i++){
+      links.add(ref.read(boardNotifierProvider).pinIds[i]);
+    }
+    boardUrls = links;
+  }
 }
 
 

@@ -342,7 +342,7 @@ return FutureBuilder<void>(
                     ],
                   ),
                   const SizedBox(height: 10,),
-                  Text('${ref.read(userProfileNotifierProvider).pins.length.toString()} Pin saved'),
+                  Text('${ref.read(backendeServicesProvider).urls.length} Pin saved'),
                   const SizedBox(height: 10,),
                   Row(
                     children: [
@@ -385,57 +385,162 @@ return FutureBuilder<void>(
   }
 }
 
-
-
-class BoardsPage extends StatelessWidget {
+class BoardsPage extends ConsumerWidget {
   const BoardsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const SizedBox(width: 20,),
-              Container(
-                width: 270,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(width: 2, color: Colors.black), 
-                ),
-                child: Center(
-                  child: Row(
+  Widget build(BuildContext context, WidgetRef ref) {
+return FutureBuilder<void>(
+  future: ref.read(backendeServicesProvider).getBoard(ref),
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); 
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }else{
+          return SizedBox(
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      const SizedBox(width: 10,),
-                      const Icon(Icons.search),
-                      const SizedBox(width: 2.5,),
-                      Expanded(
-                        child: TextField(
-                          onChanged: (value) {
-                            
-                          },
-                          decoration: const InputDecoration(
-                            hintText: 'Search your saved ideas',
-                            border: InputBorder.none,
+                      const SizedBox(width: 20,),
+                      Container(
+                        width: 270,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(width: 2, color: Colors.black), 
+                        ),
+                        child: Center(
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 10,),
+                              const Icon(Icons.search),
+                              const SizedBox(width: 2.5,),
+                              Expanded(
+                                child: TextField(
+                                  onChanged: (value) {},
+                                  decoration: const InputDecoration(
+                                    hintText: 'Search your saved ideas',
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
+                      const SizedBox(width: 20,),
+                      Container(
+                        width: 24, 
+                        height: 24, 
+                        child: Transform.rotate(
+                          angle: 90 * 3.1415926535897932 / 180,
+                          child: const Icon(Icons.compare_arrows_rounded),
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+                      GestureDetector(
+                        onTap: () {
+                          ref.read(createPinUIProvider).showCreatePanel(context);
+                        },
+                        child: const Icon(Icons.add)
+                      ),
+                      const SizedBox(width: 20,),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 10,),
+                  SizedBox(
+                    child: Column(
+                      children: [
+                        Container(
+                                height: 200,
+                                width: MediaQuery.of(context).size.width/2,
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 1)
+                                ),
+                              child: Expanded(
+                                child: GridView.builder(
+                                  shrinkWrap: true, 
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:2),
+                                  itemCount: ref.read(backendeServicesProvider).boardUrls.length, 
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return SizedBox(
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(25),
+                                          child: Image.network(
+                                            ref.read(backendeServicesProvider).urls[index],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    );
+                                  },         
+                                ),
+                              ),
+                            ),
+                            Center(child: Text('Board Name: ${ref.read(boardNotifierProvider).name}'),)
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 20,),
-              const Icon(Icons.apps_rounded),
-              const SizedBox(width: 20,),
-              const Icon(Icons.add),
-              const SizedBox(width: 20,),
-            ],
-          ),
-          const SizedBox(height: 20,),
-        ],
-      ),
-    );
+            );
+        }
+  }
+);
   }
 }
+
+// class BoardsPage extends StatelessWidget {
+//   const BoardsPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Column(
+//         children: [
+//           Row(
+//             children: [
+//               const SizedBox(width: 20,),
+//               Container(
+//                 width: 270,
+//                 height: 50,
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.circular(30),
+//                   border: Border.all(width: 2, color: Colors.black), 
+//                 ),
+//                 child: Center(
+//                   child: Row(
+//                     children: [
+//                       const SizedBox(width: 10,),
+//                       const Icon(Icons.search),
+//                       const SizedBox(width: 2.5,),
+//                       Expanded(
+//                         child: TextField(
+//                           onChanged: (value) {
+                            
+//                           },
+//                           decoration: const InputDecoration(
+//                             hintText: 'Search your saved ideas',
+//                             border: InputBorder.none,
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(width: 20,),
+//               const Icon(Icons.apps_rounded),
+//               const SizedBox(width: 20,),
+//               const Icon(Icons.add),
+//               const SizedBox(width: 20,),
+//             ],
+//           ),
+//           const SizedBox(height: 20,),
+//         ],
+//       ),
+//     );
+//   }
+// }
