@@ -17,10 +17,12 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color _textColor =
-        textColor == 'white' ? const Color(0xFFFFFFFF) : const Color(0xFF000000);
-    Color _buttonColor =
-        buttonColor == 'red' ? const Color(0xFFE70125) : const Color(0xFFFFFFFF);
+    Color localTextColor = textColor == 'white'
+        ? const Color(0xFFFFFFFF)
+        : const Color(0xFF000000);
+    Color localButtonColor = buttonColor == 'red'
+        ? const Color(0xFFE70125)
+        : const Color(0xFFFFFFFF);
 
     return GestureDetector(
       onTap: onPressed,
@@ -29,13 +31,13 @@ class ButtonWidget extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: _buttonColor,
+          color: localButtonColor, // Use localButtonColor here
         ),
         child: Center(
           child: Text(
             text,
             style: GoogleFonts.inter(
-              color: _textColor,
+              color: localTextColor, // Use localTextColor here
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
@@ -45,8 +47,6 @@ class ButtonWidget extends StatelessWidget {
     );
   }
 }
-
-
 
 class NameButton extends StatefulWidget {
   final Function() onPressed;
@@ -63,31 +63,31 @@ class _NameButtonState extends State<NameButton> {
   void initState() {
     super.initState();
     _buttonColor = const Color(0xFFE70125);
-    _textColor =  const Color(0xFF000000);
+    _textColor = const Color(0xFF000000);
   }
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap:widget.onPressed,
-          child: Container(
-            width: 150,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: _buttonColor,
-            ),
-            child: Center(
-              child: Text(
-                "Update",
-                style: GoogleFonts.inter(
-                  color: _textColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: Container(
+        width: 150,
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: _buttonColor,
+        ),
+        child: Center(
+          child: Text(
+            "Update",
+            style: GoogleFonts.inter(
+              color: _textColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 }
