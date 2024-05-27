@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/screens/boards_page.dart';
+import 'package:pinterest_clone/test/pin_test.dart';
 
 import '../styles.dart';
 
@@ -98,12 +101,20 @@ class CreatePin {
                 const Spacer(),
                 Column(
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFF616161)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => TestPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFF616161)
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.push_pin, color:  Colors.white,),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10,),
@@ -120,6 +131,9 @@ class CreatePin {
                         borderRadius: BorderRadius.circular(20),
                         color: const Color(0xFF616161)
                       ),
+                      child: const Center(
+                        child: Icon(Icons.space_dashboard, color:  Colors.white,),
+                      ),
                     ),
                     const SizedBox(height: 10,),
                     const Center(child: Text('Collage', style: TextStyle(color: Color(0xFFEFEFEF), fontSize: 15, fontWeight: FontWeight.w500),))
@@ -128,12 +142,20 @@ class CreatePin {
                 const SizedBox(width: 20,),
                 Column(
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFF616161)
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateBoardPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFF616161)
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.dashboard, color:  Colors.white,),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10,),

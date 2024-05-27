@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/providers/auth_providers.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/providers/user_providers.dart';
 import 'package:pinterest_clone/screens/sign-up/gender_page.dart';
 import 'package:pinterest_clone/screens/sign-up/interested_in_page.dart';
 import 'package:pinterest_clone/screens/sign-up/location_page.dart';
+import 'package:pinterest_clone/services/services.dart';
 import '../../providers/ui_providers.dart';
 import '../landing_page.dart';
 import 'birthday_page.dart';
@@ -75,8 +77,11 @@ class SignUpPage extends ConsumerWidget {
             onPressed: () {
                final nextIndex = selectedIndex + 1;
                if(selectedIndex == _widgetOptions.length - 1){
-                final auth = ref.watch(authServicesProvider);
-                auth.sendUsersData(context, ref);
+                final service = ref.watch(backendeServicesProvider);
+                service.saveUserToFirestore(ref);
+                service.updateUserUIDAndSave(ref);
+                service.createUser(ref);
+                ref.watch(bottomNavigationProvider.notifier).setSelectedIndex(0);
                }
                else{
                 ref.read(bottomNavigationProvider.notifier).setSelectedIndex(nextIndex);

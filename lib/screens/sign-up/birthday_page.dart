@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/screens/sign-up/sign_up_page.dart';
-
-import '../../providers/user_providers.dart';
 
 class BirthdayPage extends ConsumerWidget {
   const BirthdayPage({super.key});
@@ -15,7 +14,7 @@ class BirthdayPage extends ConsumerWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 100,
-          child: ref.watch(userProvider.notifier).state.name!.isEmpty ? SetName() : const DisplayName(),
+          child: ref.watch(userModelNotifierProvider.notifier).state.name.isEmpty ? SetName() : const DisplayName(),
         ),
         const SizedBox(height: 10,),
         const Padding(
@@ -37,7 +36,7 @@ class BirthdayPage extends ConsumerWidget {
             dateOrder: DatePickerDateOrder.mdy,
             initialDateTime: DateTime.now(), 
             onDateTimeChanged: (DateTime newDateTime) {
-              ref.read(userProvider.notifier).setDob(newDateTime);
+              ref.read(userModelNotifierProvider.notifier).setBirthday(newDateTime);
             },
           ),
         ),
@@ -111,7 +110,7 @@ class SetName extends ConsumerWidget {
                   const SizedBox(width: 10,),
                   MaterialButton(
                     onPressed: (){
-                      ref.read(userProvider.notifier).setFullName(userName.trim());
+                      ref.read(userModelNotifierProvider.notifier).setName(userName.trim());
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -157,10 +156,10 @@ class DisplayName extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Hey ${ref.watch(userProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
+              Text('Hey ${ref.watch(userModelNotifierProvider.notifier).state.name}!', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22),),
               const SizedBox(width: 10,),
               IconButton(icon: const Icon(Icons.edit), onPressed: () {
-                ref.read(userProvider.notifier).setFullName('');
+                ref.read(userModelNotifierProvider.notifier).setName('');
                 Navigator.push(
                   context,
                   MaterialPageRoute(

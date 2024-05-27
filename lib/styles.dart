@@ -55,4 +55,17 @@ class AppStyle{
     fontWeight: FontWeight.w400,
   );
 
+  static const TextStyle detailsTitlePin = TextStyle(
+    color: colorWhiteGrey,
+    fontFamily: 'Inter',
+    fontSize: 22,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle detailsSubtitlePin = TextStyle(
+    color: colorWhiteGrey,
+    fontFamily: 'Inter',
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+  );
 }

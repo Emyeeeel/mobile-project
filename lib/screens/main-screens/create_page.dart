@@ -11,7 +11,7 @@ class CreatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final unsplashPhotosAsyncValue = ref.watch(homePagePhotosProvider);
+    final unsplashPhotosAsyncValue = ref.read(homePagePhotosProvider);
 
     return Column(
       children: [
@@ -37,7 +37,7 @@ class CreatePage extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photoUrl: photo.photoUrl,)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PinImage(photo: photo,)));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
