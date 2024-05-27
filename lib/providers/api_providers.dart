@@ -25,6 +25,10 @@ final topicPhotosProvider = FutureProvider.family<List<UnsplashPhoto>, List<Stri
   return service.getPhoto(topics);
 });
 
+final searchPhotoProvider = FutureProvider.family<List<dynamic>, String>((ref, query) async {
+  final service = ApiService();
+  return service.searchPhoto(query);
+});
 
 
 

@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pinterest_clone/providers/providers.dart';
 import 'package:pinterest_clone/screens/main-screens/inbox_page.dart';
 import 'package:pinterest_clone/screens/main-screens/search_page.dart';
 import 'package:pinterest_clone/services/services.dart';
-import 'package:pinterest_clone/test/test_page.dart';
 //import 'package:flutter/widgets.dart';
 
 import '../providers/ui_providers.dart';
@@ -18,7 +16,7 @@ class MainPage extends ConsumerWidget {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const HomePage(),
-    TestPage(),
+    SearchPage(),
     const CreatePage(),
     InboxPage(),
     SavedPage(),
@@ -49,7 +47,7 @@ class MainPage extends ConsumerWidget {
                 icon: const Icon(Icons.add, color: Color(0xFF797979)),
                 activeIcon: GestureDetector(
                   onTap: (){
-                    ref.watch(createPinUIProvider).showCreatePanel(context);
+                    ref.read(createPinUIProvider).showCreatePanel(context);
                   },
                   child: const Icon(Icons.add, color: Color(0xFF111111))),
                 label: 'Create',

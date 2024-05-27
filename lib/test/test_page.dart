@@ -4,11 +4,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/providers.dart';
 
 import '../providers/api_providers.dart';
-import '../screens/sign-up/interested_in_page.dart';
 import '../widgets/photo_widgets.dart';
 
-class TestPage extends ConsumerWidget {
-  TestPage({super.key});
+class SamplePage extends ConsumerWidget {
+  SamplePage({super.key});
 
   final title = TextEditingController();
   final description = TextEditingController();

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/providers/providers.dart';
+import 'package:pinterest_clone/providers/ui_providers.dart';
 import 'package:pinterest_clone/services/services.dart';
 import 'package:provider/provider.dart';
 
@@ -331,7 +332,12 @@ return FutureBuilder<void>(
                         ),
                       ),
                       const SizedBox(width: 20,),
-                      const Icon(Icons.add),
+                      GestureDetector(
+                        onTap: () {
+                          ref.read(createPinUIProvider).showCreatePanel(context);
+                        },
+                        child: const Icon(Icons.add)
+                      ),
                       const SizedBox(width: 20,),
                     ],
                   ),

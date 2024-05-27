@@ -6,6 +6,7 @@ import '../models/photo_model.dart';
 class ApiService {
   final String _baseUrl = 'https://api.unsplash.com';
   final String _clientId = 'N__PKKjjE_rGt2fsn4xs_HXE0ajm7pLn5MJxUDMIHCk';
+  List<dynamic> allPhotos = [];
 
   Future<List<UnsplashPhoto>> getPhotosLandingPage() async {
     final response = await http.get(Uri.parse('$_baseUrl/photos/random?count=10&query=wallpaper&orientation=portrait&client_id=$_clientId'));
@@ -67,6 +68,23 @@ class ApiService {
     }
   }
 
+  Future<List<dynamic>> searchPhoto(String query) async {
+  int page = 1;
+    allPhotos.clear(); 
+    while (allPhotos.length < 50) {
+      final response = await http.get(Uri.parse(
+          '$_baseUrl/search/photos?per_page=50&page=$page&query=$query&client_id=N__PKKjjE_rGt2fsn4xs_HXE0ajm7pLn5MJxUDMIHCk'));
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final List<dynamic> photos = responseData['results']; 
+        allPhotos.addAll(photos);
+        page++;
+      } else {
+        throw Exception('Failed to load photos');
+      }
+    }
+    return allPhotos;
+  }
 }
 
 class CountryStateCityRepo {
