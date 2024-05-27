@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pinterest_clone/screens/boards_page.dart';
 import 'package:pinterest_clone/test/pin_test.dart';
 
 import '../styles.dart';
@@ -141,15 +142,20 @@ class CreatePin {
                 const SizedBox(width: 20,),
                 Column(
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFF616161)
-                      ),
-                      child: const Center(
-                        child: Icon(Icons.dashboard, color:  Colors.white,),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreateBoardPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFF616161)
+                        ),
+                        child: const Center(
+                          child: Icon(Icons.dashboard, color:  Colors.white,),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10,),

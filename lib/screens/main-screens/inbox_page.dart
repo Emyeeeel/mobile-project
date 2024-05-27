@@ -128,7 +128,7 @@ class ContactsList extends ConsumerWidget {
     ref.read(backendeServicesProvider).getUserInfo(ref);
     final userProfile = ref.read(userProfileNotifierProvider);
     return FutureBuilder<void>(
-      future: ref.watch(backendeServicesProvider).setContactsList(ref),
+      future: ref.read(backendeServicesProvider).setContactsList(ref),
       builder: (context, snapshot) {
         return Container(
           width: MediaQuery.of(context).size.width-50,

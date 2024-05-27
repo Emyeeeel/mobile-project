@@ -350,6 +350,7 @@ class BackendeServices {
   List<String> urls = [];
   Future<void> getSavedList (WidgetRef ref) async {
     urls.clear();
+    List<String> links = [];
    final userId = ref.read(userModelNotifierProvider.notifier).uid;
     
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -359,8 +360,10 @@ class BackendeServices {
 
     for (var doc in querySnapshot.docs) {
       String url = doc['url']; 
-      urls.add(url);
+      links.add(url);
     }
+    urls = links;
+    ref.read(userProfileNotifierProvider.notifier).setPins(urls);
   }
 }
 

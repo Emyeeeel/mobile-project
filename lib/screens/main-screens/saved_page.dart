@@ -342,6 +342,8 @@ return FutureBuilder<void>(
                     ],
                   ),
                   const SizedBox(height: 10,),
+                  Text('${ref.read(userProfileNotifierProvider).pins.length.toString()} Pin saved'),
+                  const SizedBox(height: 10,),
                   Row(
                     children: [
                       const SizedBox(width: 20,),
@@ -373,7 +375,7 @@ return FutureBuilder<void>(
                       ),
                       const SizedBox(width: 20,),
                     ],
-                  )
+                  ),
                 ],
               ),
             );
